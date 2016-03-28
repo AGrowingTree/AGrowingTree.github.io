@@ -1,8 +1,8 @@
 ---
-author:
-- Huayang Li
+layout: post
 title: Sponser Advertising
-...
+comments: True
+---
 
 INTRODUCTION
 ============
@@ -82,8 +82,12 @@ The data used comes from logs of user web accesses. This data contains
 web searches annotated with user ID and timestamp. A *candidate
 reformulation*is a pair of successive queries issued by a single user on
 a single day. Candidate reformulations will also be referred to as query
-pairs. $$\begin{aligned}
-\text{candidate}&\text{Query}\text{Pairs}(user_{i},day_{i})=\{\langle q_{1},q_{2} \rangle:(q_{1}\ne q_{2})\land\\ &\exists t: query_{t}(user_{i}, q_{1}) \land query_{t+1}(user_{i}, q_{2})\}\end{aligned}$$
+pairs. 
+
+$$\begin{align}
+\text{candidate}&\text{Query}\text{Pairs}(user_{i},day_{i})=\\{\langle q_{1},q_{2} \rangle:(q_{1}\ne q_{2})\land \\\
+&\exists t: query_{t}(user_{i}, q_{1}) \land query_{t+1}(user_{i}, q_{2})\\}\end{align}
+$$
 
 ### Phrase Substitutions
 
@@ -105,9 +109,14 @@ likelihood ratio. This metric tests the hypothesis that the probability
 of term q2 is the same whether term q1 has been seen or not, by
 calculating the likelihood of the observed data under a binomial
 distribution using probabilities derived using each hypothesis
+
 $$\begin{aligned}
-     H_{1}:P(q_{2}|q_{1})=&p=P(q_{2}|\neg q_{1})\\
-H_{2}:P(q_{2}|q_{1})=p_{1}&\ne p_{2}=P(q_{2}|\neg q_{1})\\\end{aligned}$$
+    H_{1}:P(q_{2}|q_{1})=&p=P(q_{2}|\neg q_{1})\\\
+H_{2}:P(q_{2}|q_{1})=p_{1}&\ne p_{2}=P(q_{2}|\neg q_{1}) \end{aligned}
+$$
+
+
+
 The likelihood score is $$\lambda = \frac{L(H_{1})}{L(H_{2})}$$ The test
 statistic $-2 \log \lambda$ is asymptotically $\chi^{2}$ distributed.
 Therefore we work with the log likelihood ratio score:
@@ -150,25 +159,25 @@ Query Rewriting Basing On Click Data
 
 ### Problem Definition
 
--   We call the set of engine click set ${\mathcal}{L}$, which is
+-   We call the set of engine click set $\mathcal L$, which is
     consisted with tuples $\langle q, u, f_{qu} \rangle$. Where $u$
     represent the URL and the $q$ represent the query. What’s more,
     $f_{qu} $ is the number of times that the users issued query $q$ to
     the search engine and clicked on URL $u$. And
-    ${\mathcal}{Q}\  \text{and}\  {\mathcal}{U}$ is the set if all
+    $\mathcal Q\  \text{and}\ \mathcal U$ is the set if all
     queries and all URLs.\
-    We will consider clock log ${\mathcal}{L}$ as a bipartite graph
-    ${\mathcal}{G} = ({\mathcal}{Q}, {\mathcal}{U}, E)$, and
+    We will consider clock log $\mathcal L$ as a bipartite graph
+    $\mathcal G = \mathcal Q,\mathcal U, E)$, and
     $(q, u)\in E \text{ with weight} f_{qu}$.
 
 -   And we define a *concepts* set
-    ${\mathcal}{C} = \{c_{1}, c_{2}, \dots, c_{k} \} $. The element in
-    ${\mathcal}{C}$ can be only one concept, such as “shoes” , in more
+    $\mathcal C = \{c_{1}, c_{2}, \dots, c_{k} \} $. The element in
+    $\mathcal C$ can be only one concept, such as “shoes” , in more
     complex cases we may have different classes in a taxonomy.
 
 -   A *seed set*
-    ${\mathcal}{S} \subseteq {\mathcal}{U}\times{\mathcal}{C}$, and the
-    seed set ${\mathcal}{S}$ is consists of $\langle u, c\rangle$ pairs.
+    $\mathcal S \subseteq\mathcal U\time\mathcal C$, and the
+    seed set $\mathcal S$ is consists of $\langle u, c\rangle$ pairs.
     We can regard this as label the URL with concept $c_{k}$.[^2]
 
 ### A Random Walk Algorithms
@@ -177,8 +186,8 @@ Intuitively the queries (and URLs) are related to the concept of shoes
 because they are connected closely in the graph to the seed set that
 represents this concept.
 
-For some query $q \in {\mathcal}{Q}$ , we compute the affinity of $q$ to
-some seed node $s \in {\mathcal}{S}$ as the probability that a random
+For some query $q \in\mathcal Q$ , we compute the affinity of $q$ to
+some seed node $s \in\mathcal S$ as the probability that a random
 walk that starts from $q$ ends up at node $s$. The affinity is the
 probability that $q$ belongs to concept $c_{i}$ as seed $s$.
 
@@ -195,7 +204,7 @@ Performing a random walk for every query in the graph is computationally
 prohibitive for a large graph. However, there is a simple iterative
 algorithm that can compute the class probabilities efficiently. We will
 now describe the al- gorithm for the case that we have a single concept
-$c$ (that is, ${\mathcal}{C} = {c}$), and then show how to generalize to
+$c$ (that is, $\mathcal C = {c}$), and then show how to generalize to
 the case of multiple classes.
 
 Let $\ell_q $ (or $\ell_u $ ) denote the random variable pertaining to
@@ -215,15 +224,15 @@ where $$w_{uq} = \frac{f_{uq}}{\sum_{q:(u,q)\in E}f_{uq}}$$
 
 \[H\]
 
-\[1\] the seed set ${\mathcal}{S}$ for class $c$, the click-graph
-${\mathcal}{G}$, the threshold parameter $\gamma$ , the transition
+\[1\] the seed set $\mathcal S$ for class $c$, the click-graph
+$\mathcal G$, the threshold parameter $\gamma$ , the transition
 probability $\alpha$ to $\omega$ $P (\ell_{q} = c)$, for every query q
 $P(\ell_{u}=c)=1$
 $P(\ell_{q} = c)=(1-\alpha)\sum_{u:(q,u)\in E}\omega_{qu}P(\ell_{u} = c) $
 $P(\ell_{q} = c) = 0 $
 $P(\ell_{u} = c)=(1-\alpha)\sum_{q:(u,q)\in E}\omega_{uq}P(\ell_{q} = c) $
-$(\ell_{u} = c) = 0 $ Output $P (\ell_{q} = c)$, for every query q and
-class ${\mathcal}{Q} $
+$(\ell_{u} = c) = 0 $ Output $P (\ell_{q} = c)$, for every query $q$ and
+class $\mathcal Q $
 
 The algorithm generalizes naturally to the case where there are multiple
 concepts, but this process is memory intensive since it requires to
@@ -233,13 +242,13 @@ even if we prune nodes with low probabilities, since the size of the
 seed set may be significantly larger.
 
 This problem can be addressed by considering the con- cepts one at the
-time. Let ${\mathcal}{S} = {{\mathcal}{S}_1, \dots {\mathcal}{S}_k} $be
+time. Let $\mathcal S = \mathcal S_1, \dots\mathcal S_k $be
 the partition of the seed set into the k concept. Apllying Algorithms 1
-directly for each ${\mathcal}{S}_{i}$ is incoreect, because we ignore an
-important information: ${\mathcal}{S}\backslash {\mathcal}{S}_i $ is
-null class of ${\mathcal}{S}_i $. Apllying with this, we will explore
+directly for each $\mathcal S_{i}$ is incoreect, because we ignore an
+important information: $\mathcal S\backslash\mathcal S_i $ is
+null class of $\mathcal S_i $. Apllying with this, we will explore
 much smaller fraction of click graphy. we fix the probability of the
-nodes in ${\mathcal}{S} \backslash {\mathcal}{S}_i$ to belong to the
+nodes in $\mathcal S \backslash\mathcal S_i$ to belong to the
 class $c_i$ to zero, thus making them into null absorbing nodes.
 
 \[H\]

@@ -37,5 +37,8 @@ gems:
 
 markdown: redcarpet
 
+kramdown:
+  input: GFM
+
 redcarpet:
   extensions: [autolink, no_intra_emphasis, strikethrough, tables, with_toc_data]
