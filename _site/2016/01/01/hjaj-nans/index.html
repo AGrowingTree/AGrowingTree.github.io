@@ -1,0 +1,328 @@
+<h1 id="introduction">INTRODUCTION</h1>
+
+<p>But for the SS, the web will be much more small. Once a user type the
+queries and browse on the search engines, the advertiser will bid for
+this queries and the winner’s Ad will be shown with the result. The
+advertiser want the conversion, the network want the revenue, and the
+user want the relevance. The cure problem to satisfy advertisers, users,
+and the netwrork is to select the relevant textual ad.</p>
+
+<p>there are 3 technique mentioned in the ppt, <strong>EM(Exact Match)</strong>, <strong>AM</strong>\
+<strong>(Advanced Match)</strong>, and <strong>PM(Phase Match)</strong>. EM is using for the
+frequently occured queries, we’ll talk in section 1. The most
+complicated technique is AM. AM is born for the long tail of queries,
+because more than 80% of queries occur one time. The challenge of AM is
+queries re-writting, we’ll talk in section 2. For section 3, we’ll talk
+the problem remain to be solved in the new term.</p>
+
+<h2 id="implementation-approaches">Implementation Approaches</h2>
+
+<ol>
+  <li>
+    <p><strong>The data base approach</strong>(original Overture approach)</p>
+
+    <ul>
+      <li>
+        <p>Ads are records in a data base</p>
+      </li>
+      <li>
+        <p>The bid phrase (BP) is an attribute</p>
+      </li>
+      <li>
+        <p>On query q, for EM consider all ads with BP=q</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>The IR approach</strong>(modern view)</p>
+
+    <ul>
+      <li>
+        <p>Ads are documents in an ad corpus</p>
+      </li>
+      <li>
+        <p>The bid phrase is a meta-datum</p>
+      </li>
+      <li>
+        <p>On query q run q against the ad corpus</p>
+
+        <ul>
+          <li>
+            <p>Have a suitable ranking function (more later)</p>
+          </li>
+          <li>
+            <p>BP = q (exact match) has high weight</p>
+          </li>
+          <li>
+            <p>No distinction between AM and EM</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="the-two-phases-of-ad-selection">The two phases of ad selection</h2>
+
+<ul>
+  <li>
+    <p>Ad Retrieval: Consider the whole ad corpus and select a set of most
+viable candidates (e.g. 100)</p>
+  </li>
+  <li>
+    <p>Ad Reordering: Re-score the candidates using a more elaborate
+scoring function to produce the final ordering</p>
+  </li>
+</ul>
+
+<h1 id="exact-match">EXACT MATCH</h1>
+
+<p>What’s EM?</p>
+
+<ul>
+  <li>
+    <p>queries = BP(bid phrase)</p>
+  </li>
+  <li>
+    <p>e.g. if the users query is “shoes”, then only the bid phrase “shoes”
+will match, the “sports shoes”, “shoe” or “shoees”… will fail
+to match.</p>
+  </li>
+  <li>
+    <p>this matching type will raise up the CTR but the volume will be low,
+in other words, it will reach less users.</p>
+  </li>
+</ul>
+
+<h1 id="advanced-match">ADVANCED MATCH</h1>
+
+<h2 id="query-rewriting-basing-on-query-logs">Query Rewriting Basing On Query Logs</h2>
+
+<h3 id="definition-of-query-pair">Definition of Query Pair</h3>
+
+<p>The data used comes from logs of user web accesses. This data contains
+web searches annotated with user ID and timestamp. A <em>candidate
+reformulation</em>is a pair of successive queries issued by a single user on
+a single day. Candidate reformulations will also be referred to as query
+pairs. <script type="math/tex">% <![CDATA[
+\begin{aligned}
+\text{candidate}&\text{Query}\text{Pairs}(user_{i},day_{i})=\{\langle q_{1},q_{2} \rangle:(q_{1}\ne q_{2})\land\\ &\exists t: query_{t}(user_{i}, q_{1}) \land query_{t+1}(user_{i}, q_{2})\}\end{aligned} %]]></script></p>
+
+<h3 id="phrase-substitutions">Phrase Substitutions</h3>
+
+<p>The repeated searches for the same terms, as well as query pair
+sequences repeated by the same user on the same day. We then aggregate
+over users, so the data for a single day consists of all candidate
+reformulations for all users for that day.</p>
+
+<p>then use the phrases identified by high point-wise mutual information we
+segment queries into phrase for example “(new york) (maps)” or “(britney
+spears) (mp3s)”. where we set the threshold κ to be
+8<script type="math/tex">\frac{P(\alpha, \beta)}{P(\alpha),P(\beta)} > \kappa</script></p>
+
+<h3 id="identifying-significant-query-pairs-and-phrase-pairs">Identifying Significant Query Pairs and Phrase Pairs</h3>
+
+<p>In order to distinguish related query and phrase pairs from candidate
+pairs that are unrelated, we use the pair indepen- dence hypothesis
+likelihood ratio. This metric tests the hypothesis that the probability
+of term q2 is the same whether term q1 has been seen or not, by
+calculating the likelihood of the observed data under a binomial
+distribution using probabilities derived using each hypothesis
+<script type="math/tex">% <![CDATA[
+\begin{aligned}
+     H_{1}:P(q_{2}|q_{1})=&p=P(q_{2}|\neg q_{1})\\
+H_{2}:P(q_{2}|q_{1})=p_{1}&\ne p_{2}=P(q_{2}|\neg q_{1})\\\end{aligned} %]]></script>
+The likelihood score is <script type="math/tex">\lambda = \frac{L(H_{1})}{L(H_{2})}</script> The test
+statistic $-2 \log \lambda$ is asymptotically $\chi^{2}$ distributed.
+Therefore we work with the log likelihood ratio score:
+<script type="math/tex">\text{LLR} = −2 \log \lambda = −2 \log \frac{L(H_{1})}{L(H_{2})}</script> A
+high value for the likelihood ratio suggests that there is a strong
+dependence between term $q_1$ and term $q_2$. We refer to query pairs
+and phrase pairs above a threshold for the LLR score as
+<em>substitutables</em>.</p>
+
+<h3 id="generating-candidates">Generating Candidates</h3>
+
+<p>We seek to generate statistically significant related queries for
+arbitrary input queries. For frequent queries, we may have many
+suggestions. But for less frequent queries, maybe there is no
+statistically significant related queries. Because of the long tail, the
+less frequent queries has a large fraction of the whole queries.</p>
+
+<p>In the same way as we generated the phrase-substitutables, we can break
+up the input query into segments, and replace one or several segments by
+statistically significant related segments. This will help cover the
+infrequent queries.</p>
+
+<ul>
+  <li>
+    <p>generate $m$ candidate whole-query substitutions
+$q_i\mapsto q_{i1}, q_{i2}\dots q_{im} $</p>
+  </li>
+  <li>
+    <p>segment query into phrases $p_1\dots p_n $</p>
+  </li>
+  <li>
+    <p>for each phrase $p_i $</p>
+
+    <ul>
+      <li>
+        <p>generate $k$ phrase$-$substitutions
+$p_i\mapsto p_{i1}, p_{i2}\dots p_{ik} $</p>
+      </li>
+      <li>
+        <p>generate new query from a combination of original phrases and
+new phrases: $q_i \mapsto p_1\dots p_j^{\prime}\dots p_n$</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>more information<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
+
+<h2 id="query-rewriting-basing-on-click-data">Query Rewriting Basing On Click Data</h2>
+
+<h3 id="problem-definition">Problem Definition</h3>
+
+<ul>
+  <li>
+    <p>We call the set of engine click set $\mathcal{L}$, which is
+consisted with tuples $\langle q, u, f_{qu} \rangle$. Where $u$
+represent the URL and the $q$ represent the query. What’s more,
+$f_{qu} $ is the number of times that the users issued query $q$ to
+the search engine and clicked on URL $u$. And
+$\mathcal{Q}\  \text{and}\  \mathcal{U}$ is the set if all
+queries and all URLs.\
+We will consider clock log $\mathcal{L}$ as a bipartite graph
+$\mathcal{G} = (\mathcal{Q}, \mathcal{U}, E)$, and
+$(q, u)\in E \text{ with weight} f_{qu}$.</p>
+  </li>
+  <li>
+    <p>And we define a <em>concepts</em> set
+$\mathcal{C} = {c_{1}, c_{2}, \dots, c_{k} } $. The element in
+$\mathcal{C}$ can be only one concept, such as “shoes” , in more
+complex cases we may have different classes in a taxonomy.</p>
+  </li>
+  <li>
+    <p>A <em>seed set</em>
+$\mathcal{S} \subseteq \mathcal{U}\times\mathcal{C}$, and the
+seed set $\mathcal{S}$ is consists of $\langle u, c\rangle$ pairs.
+We can regard this as label the URL with concept $c_{k}$.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
+  </li>
+</ul>
+
+<h3 id="a-random-walk-algorithms">A Random Walk Algorithms</h3>
+
+<p>Intuitively the queries (and URLs) are related to the concept of shoes
+because they are connected closely in the graph to the seed set that
+represents this concept.</p>
+
+<p>For some query $q \in \mathcal{Q}$ , we compute the affinity of $q$ to
+some seed node $s \in \mathcal{S}$ as the probability that a random
+walk that starts from $q$ ends up at node $s$. The affinity is the
+probability that $q$ belongs to concept $c_{i}$ as seed $s$.</p>
+
+<p>Note that in this walk the nodes in the seed set act as <em>absorbing
+nodes</em>, that is, sink nodes in the state transition graph from which the
+random walk cannot escape. The probability of absorbing nodes are
+certainly $1$, which is easy to understand.</p>
+
+<p>And the further away the queries and URLs from seed sets’ URLs, the less
+related it should be to the URL’s class. We model this by introducing an
+absorbing “null class” node $\omega$ to the graph.</p>
+
+<p>Performing a random walk for every query in the graph is computationally
+prohibitive for a large graph. However, there is a simple iterative
+algorithm that can compute the class probabilities efficiently. We will
+now describe the al- gorithm for the case that we have a single concept
+$c$ (that is, $\mathcal{C} = {c}$), and then show how to generalize to
+the case of multiple classes.</p>
+
+<p>Let $\ell_q $ (or $\ell_u $ ) denote the random variable pertaining to
+the concept label for query $q$ (or URL $u$). We want to compute
+$P(\ell_{q} = c) $Let $\alpha$ be the probability of making a transition
+to the null class absorbing node, from any node in the graph. Then we
+have that:
+<script type="math/tex">P(\ell_q = c) = (1-\alpha) \sum_{u:(q,u)\in E}w_{qu}P(\ell_{u} = c) \eqno{(1)}</script>
+where <script type="math/tex">w_{qu} = \frac{f_{qu}}{\sum_{u:(q,u)\in E}f_{qu}}</script> we have that
+$P(\ell_u = c) = 1 $ if the pair $\langle u, c\rangle$ belongs in the
+seed set, and zero otherwise</p>
+
+<p>For all other URLs, the probability $P(\ell_{u} = c) $ is again
+recursively computed as:
+<script type="math/tex">P(\ell_u = c) = (1-\alpha) \sum_{q:(u,q)\in E}w_{uq}P(\ell_{q} = c) \eqno{(2)}</script>
+where <script type="math/tex">w_{uq} = \frac{f_{uq}}{\sum_{q:(u,q)\in E}f_{uq}}</script></p>
+
+<p>[H]</p>
+
+<p>[1] the seed set $\mathcal{S}$ for class $c$, the click-graph
+$\mathcal{G}$, the threshold parameter $\gamma$ , the transition
+probability $\alpha$ to $\omega$ $P (\ell_{q} = c)$, for every query q
+$P(\ell_{u}=c)=1$
+$P(\ell_{q} = c)=(1-\alpha)\sum_{u:(q,u)\in E}\omega_{qu}P(\ell_{u} = c) $
+$P(\ell_{q} = c) = 0 $
+$P(\ell_{u} = c)=(1-\alpha)\sum_{q:(u,q)\in E}\omega_{uq}P(\ell_{q} = c) $
+$(\ell_{u} = c) = 0 $ Output $P (\ell_{q} = c)$, for every query q and
+class $\mathcal{Q} $</p>
+
+<p>The algorithm generalizes naturally to the case where there are multiple
+concepts, but this process is memory intensive since it requires to
+maintain probability vectors for all $k$ classes. Furthermore, the
+fraction of the graph that will be explored will increase substantially
+even if we prune nodes with low probabilities, since the size of the
+seed set may be significantly larger.</p>
+
+<p>This problem can be addressed by considering the con- cepts one at the
+time. Let $\mathcal{S} = {\mathcal{S}<em>1, \dots \mathcal{S}_k} $be
+the partition of the seed set into the k concept. Apllying Algorithms 1
+directly for each $\mathcal{S}</em>{i}$ is incoreect, because we ignore an
+important information: $\mathcal{S}\backslash \mathcal{S}_i $ is
+null class of $\mathcal{S}_i $. Apllying with this, we will explore
+much smaller fraction of click graphy. we fix the probability of the
+nodes in $\mathcal{S} \backslash \mathcal{S}_i$ to belong to the
+class $c_i$ to zero, thus making them into null absorbing nodes.</p>
+
+<p>[H]</p>
+
+<p>[1] the seed set $S = {S_{1},\dots,S_{k}}$ for
+concepts$C = {c_{1},\dots,c_{k}} $, the click-graph $G$ the threshold
+parameter$\gamma $, the transition probability $\alpha$ to $\omega $
+$P (\ell_{q} = c)$, for every query q and class c $P(\ell_{u}=c_{i})=0$
+$P(\ell_{u}=c)=1$
+$P(\ell_{q} = c)=(1-\alpha)\sum_{u:(q,u)\in E}\omega_{qu}P(l_{u} = c) $
+$P(\ell_{q} = c) = 0 $
+$P(\ell_{u} = c)=(1-\alpha)\sum_{q:(u,q)\in E}\omega_{uq}P(\ell_{q} = c) $
+$(\ell_{u} = c) = 0 $ Output $P (\ell_{q} = c)$, for every query q and
+class c</p>
+
+<p>more information here<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
+
+<h1 id="remain-to-be-solved">REMAIN TO BE SOLVED</h1>
+
+<p>The problems:</p>
+
+<ol>
+  <li>
+    <p>other algorithms in the paper, and the comparasion between them</p>
+  </li>
+  <li>
+    <p>how to bid for AM</p>
+  </li>
+</ol>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Generating Query Substitutions: Jones et al, in Proc of WWW 2006 <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>we can also define the seed set as labeled queries or a mix of
+quries and URLs. For simplicity, we will restrict ourselves to the
+case that the seed set consists only of URLs. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p>Using the Wisdom of the Crowds for Keyword Generation: Fuxman et
+al., In proc of WWW 2004 <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>

@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Huayang</title>
+ <link href="http://agrowingtree.github.io/atom.xml" rel="self"/>
+ <link href="http://agrowingtree.github.io/"/>
+ <updated>2016-03-28T18:44:50+08:00</updated>
+ <id>http://agrowingtree.github.io</id>
+ <author>
+   <name>Huayang Li</name>
+   <email>waajoenglei@gmail.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>Sponser Advertising</title>
+   <link href="http://agrowingtree.github.io/2016/01/03/hjaj-nans/"/>
+   <updated>2016-01-03T00:00:00+08:00</updated>
+   <id>http://agrowingtree.github.io/2016/01/03/hjaj-nans</id>
+   <content type="html">&lt;h1 id=&quot;introduction&quot;&gt;INTRODUCTION&lt;/h1&gt;
+
+&lt;p&gt;But for the SS, the web will be much more small. Once a user type the
+queries and browse on the search engines, the advertiser will bid for
+this queries and the winner’s Ad will be shown with the result. The
+advertiser want the conversion, the network want the revenue, and the
+user want the relevance. The cure problem to satisfy advertisers, users,
+and the netwrork is to select the relevant textual ad.&lt;/p&gt;
+
+&lt;p&gt;there are 3 technique mentioned in the ppt, &lt;strong&gt;EM(Exact Match)&lt;/strong&gt;, &lt;strong&gt;AM&lt;/strong&gt;\
+&lt;strong&gt;(Advanced Match)&lt;/strong&gt;, and &lt;strong&gt;PM(Phase Match)&lt;/strong&gt;. EM is using for the
+frequently occured queries, we’ll talk in section 1. The most
+complicated technique is AM. AM is born for the long tail of queries,
+because more than 80% of queries occur one time. The challenge of AM is
+queries re-writting, we’ll talk in section 2. For section 3, we’ll talk
+the problem remain to be solved in the new term.&lt;/p&gt;
+
+&lt;h2 id=&quot;implementation-approaches&quot;&gt;Implementation Approaches&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt; &lt;strong&gt;The data base approach&lt;/strong&gt;(original Overture approach)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;-   Ads are records in a data base
+
+-   The bid phrase (BP) is an attribute
+
+-   On query q, for EM consider all ads with BP=q
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt; &lt;strong&gt;The IR approach&lt;/strong&gt;(modern view)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;-   Ads are documents in an ad corpus
+
+-   The bid phrase is a meta-datum
+
+-   On query q run q against the ad corpus
+
+    -   Have a suitable ranking function (more later)
+
+    -   BP = q (exact match) has high weight
+
+    -   No distinction between AM and EM
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;the-two-phases-of-ad-selection&quot;&gt;The two phases of ad selection&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Ad Retrieval: Consider the whole ad corpus and select a set of most
+viable candidates (e.g. 100)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Ad Reordering: Re-score the candidates using a more elaborate
+scoring function to produce the final ordering&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;exact-match&quot;&gt;EXACT MATCH&lt;/h1&gt;
+
+&lt;p&gt;What’s EM?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;queries = BP(bid phrase)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;e.g. if the users query is “shoes”, then only the bid phrase “shoes”
+will match, the “sports shoes”, “shoe” or “shoees”… will fail
+to match.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;this matching type will raise up the CTR but the volume will be low,
+in other words, it will reach less users.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;advanced-match&quot;&gt;ADVANCED MATCH&lt;/h1&gt;
+
+&lt;h2 id=&quot;query-rewriting-basing-on-query-logs&quot;&gt;Query Rewriting Basing On Query Logs&lt;/h2&gt;
+
+&lt;h3 id=&quot;definition-of-query-pair&quot;&gt;Definition of Query Pair&lt;/h3&gt;
+
+&lt;p&gt;The data used comes from logs of user web accesses. This data contains
+web searches annotated with user ID and timestamp. A *candidate
+reformulation*is a pair of successive queries issued by a single user on
+a single day. Candidate reformulations will also be referred to as query
+pairs. $$\begin{aligned}
+\text{candidate}&amp;amp;\text{Query}\text{Pairs}(user_{i},day_{i})={\langle q_{1},q_{2} \rangle:(q_{1}\ne q_{2})\land\\ &amp;amp;\exists t: query_{t}(user_{i}, q_{1}) \land query_{t+1}(user_{i}, q_{2})}\end{aligned}
+$$&lt;/p&gt;
+
+&lt;h3 id=&quot;phrase-substitutions&quot;&gt;Phrase Substitutions&lt;/h3&gt;
+
+&lt;p&gt;The repeated searches for the same terms, as well as query pair
+sequences repeated by the same user on the same day. We then aggregate
+over users, so the data for a single day consists of all candidate
+reformulations for all users for that day.&lt;/p&gt;
+
+&lt;p&gt;then use the phrases identified by high point-wise mutual information we
+segment queries into phrase for example “(new york) (maps)” or “(britney
+spears) (mp3s)”. where we set the threshold κ to be
+8$$\frac{P(\alpha, \beta)}{P(\alpha),P(\beta)} &amp;gt; \kappa$$&lt;/p&gt;
+
+&lt;h3 id=&quot;identifying-significant-query-pairs-and-phrase-pairs&quot;&gt;Identifying Significant Query Pairs and Phrase Pairs&lt;/h3&gt;
+
+&lt;p&gt;In order to distinguish related query and phrase pairs from candidate
+pairs that are unrelated, we use the pair indepen- dence hypothesis
+likelihood ratio. This metric tests the hypothesis that the probability
+of term q2 is the same whether term q1 has been seen or not, by
+calculating the likelihood of the observed data under a binomial
+distribution using probabilities derived using each hypothesis
+$$\begin{aligned}
+     H_{1}:P(q_{2}|q_{1})=&amp;amp;p=P(q_{2}|\neg q_{1})\
+H_{2}:P(q_{2}|q_{1})=p_{1}&amp;amp;\ne p_{2}=P(q_{2}|\neg q_{1})\\end{aligned}$$
+The likelihood score is $$\lambda = \frac{L(H_{1})}{L(H_{2})}$$ The test
+statistic $-2 \log \lambda$ is asymptotically $\chi^{2}$ distributed.
+Therefore we work with the log likelihood ratio score:
+$$\text{LLR} = −2 \log \lambda = −2 \log \frac{L(H_{1})}{L(H_{2})}$$ A
+high value for the likelihood ratio suggests that there is a strong
+dependence between term $q_1$ and term $q_2$. We refer to query pairs
+and phrase pairs above a threshold for the LLR score as
+&lt;em&gt;substitutables&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;generating-candidates&quot;&gt;Generating Candidates&lt;/h3&gt;
+
+&lt;p&gt;We seek to generate statistically significant related queries for
+arbitrary input queries. For frequent queries, we may have many
+suggestions. But for less frequent queries, maybe there is no
+statistically significant related queries. Because of the long tail, the
+less frequent queries has a large fraction of the whole queries.&lt;/p&gt;
+
+&lt;p&gt;In the same way as we generated the phrase-substitutables, we can break
+up the input query into segments, and replace one or several segments by
+statistically significant related segments. This will help cover the
+infrequent queries.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;generate $m$ candidate whole-query substitutions
+$q_i\mapsto q_{i1}, q_{i2}\dots q_{im} $&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;segment query into phrases $p_1\dots p_n $&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;for each phrase $p_i $&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  generate $k$ phrase$-$substitutions
+$p_i\mapsto p_{i1}, p_{i2}\dots p_{ik} $&lt;/li&gt;
+&lt;li&gt;  generate new query from a combination of original phrases and
+new phrases: $q_i \mapsto p_1\dots p_j^{\prime}\dots p_n$&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;more information[^1]&lt;/p&gt;
+
+&lt;h2 id=&quot;query-rewriting-basing-on-click-data&quot;&gt;Query Rewriting Basing On Click Data&lt;/h2&gt;
+
+&lt;h3 id=&quot;problem-definition&quot;&gt;Problem Definition&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;We call the set of engine click set ${mathcal}{L}$, which is
+consisted with tuples $\langle q, u, f_{qu} \rangle$. Where $u$
+represent the URL and the $q$ represent the query. What’s more,
+$f_{qu} $ is the number of times that the users issued query $q$ to
+the search engine and clicked on URL $u$. And
+${mathcal}{Q}\  \text{and}\  {mathcal}{U}$ is the set if all
+queries and all URLs.\
+We will consider clock log ${mathcal}{L}$ as a bipartite graph
+${mathcal}{G} = ({mathcal}{Q}, {mathcal}{U}, E)$, and
+$(q, u)\in E \text{ with weight} f_{qu}$.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;And we define a &lt;em&gt;concepts&lt;/em&gt; set
+${mathcal}{C} = {c_{1}, c_{2}, \dots, c_{k} } $. The element in
+${mathcal}{C}$ can be only one concept, such as “shoes” , in more
+complex cases we may have different classes in a taxonomy.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;A &lt;em&gt;seed set&lt;/em&gt;
+${mathcal}{S} \subseteq {mathcal}{U}\times{mathcal}{C}$, and the
+seed set ${mathcal}{S}$ is consists of $\langle u, c\rangle$ pairs.
+We can regard this as label the URL with concept $c_{k}$.[^2]&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;a-random-walk-algorithms&quot;&gt;A Random Walk Algorithms&lt;/h3&gt;
+
+&lt;p&gt;Intuitively the queries (and URLs) are related to the concept of shoes
+because they are connected closely in the graph to the seed set that
+represents this concept.&lt;/p&gt;
+
+&lt;p&gt;For some query $q \in {mathcal}{Q}$ , we compute the affinity of $q$ to
+some seed node $s \in {mathcal}{S}$ as the probability that a random
+walk that starts from $q$ ends up at node $s$. The affinity is the
+probability that $q$ belongs to concept $c_{i}$ as seed $s$.&lt;/p&gt;
+
+&lt;p&gt;Note that in this walk the nodes in the seed set act as &lt;em&gt;absorbing
+nodes&lt;/em&gt;, that is, sink nodes in the state transition graph from which the
+random walk cannot escape. The probability of absorbing nodes are
+certainly $1$, which is easy to understand.&lt;/p&gt;
+
+&lt;p&gt;And the further away the queries and URLs from seed sets’ URLs, the less
+related it should be to the URL’s class. We model this by introducing an
+absorbing “null class” node $\omega$ to the graph.&lt;/p&gt;
+
+&lt;p&gt;Performing a random walk for every query in the graph is computationally
+prohibitive for a large graph. However, there is a simple iterative
+algorithm that can compute the class probabilities efficiently. We will
+now describe the al- gorithm for the case that we have a single concept
+$c$ (that is, ${mathcal}{C} = {c}$), and then show how to generalize to
+the case of multiple classes.&lt;/p&gt;
+
+&lt;p&gt;Let $\ell_q $ (or $\ell_u $ ) denote the random variable pertaining to
+the concept label for query $q$ (or URL $u$). We want to compute
+$P(\ell_{q} = c) $Let $\alpha$ be the probability of making a transition
+to the null class absorbing node, from any node in the graph. Then we
+have that:
+$$P(\ell_q = c) = (1-\alpha) \sum_{u:(q,u)\in E}w_{qu}P(\ell_{u} = c) \eqno{(1)}$$
+where $$w_{qu} = \frac{f_{qu}}{\sum_{u:(q,u)\in E}f_{qu}}$$ we have that
+$P(\ell_u = c) = 1 $ if the pair $\langle u, c\rangle$ belongs in the
+seed set, and zero otherwise&lt;/p&gt;
+
+&lt;p&gt;For all other URLs, the probability $P(\ell_{u} = c) $ is again
+recursively computed as:
+$$P(\ell_u = c) = (1-\alpha) \sum_{q:(u,q)\in E}w_{uq}P(\ell_{q} = c) \eqno{(2)}$$
+where $$w_{uq} = \frac{f_{uq}}{\sum_{q:(u,q)\in E}f_{uq}}$$&lt;/p&gt;
+
+&lt;p&gt;[H]&lt;/p&gt;
+
+&lt;p&gt;[1] the seed set ${mathcal}{S}$ for class $c$, the click-graph
+${mathcal}{G}$, the threshold parameter $\gamma$ , the transition
+probability $\alpha$ to $\omega$ $P (\ell_{q} = c)$, for every query q
+$P(\ell_{u}=c)=1$
+$P(\ell_{q} = c)=(1-\alpha)\sum_{u:(q,u)\in E}\omega_{qu}P(\ell_{u} = c) $
+$P(\ell_{q} = c) = 0 $
+$P(\ell_{u} = c)=(1-\alpha)\sum_{q:(u,q)\in E}\omega_{uq}P(\ell_{q} = c) $
+$(\ell_{u} = c) = 0 $ Output $P (\ell_{q} = c)$, for every query q and
+class ${mathcal}{Q} $&lt;/p&gt;
+
+&lt;p&gt;The algorithm generalizes naturally to the case where there are multiple
+concepts, but this process is memory intensive since it requires to
+maintain probability vectors for all $k$ classes. Furthermore, the
+fraction of the graph that will be explored will increase substantially
+even if we prune nodes with low probabilities, since the size of the
+seed set may be significantly larger.&lt;/p&gt;
+
+&lt;p&gt;This problem can be addressed by considering the con- cepts one at the
+time. Let ${mathcal}{S} = {{mathcal}{S}&lt;em&gt;1, \dots {mathcal}{S}_k} $be
+the partition of the seed set into the k concept. Apllying Algorithms 1
+directly for each ${mathcal}{S}&lt;/em&gt;{i}$ is incoreect, because we ignore an
+important information: ${mathcal}{S}\backslash {mathcal}{S}&lt;em&gt;i $ is
+null class of ${mathcal}{S}_i $. Apllying with this, we will explore
+much smaller fraction of click graphy. we fix the probability of the
+nodes in ${mathcal}{S} \backslash {mathcal}{S}&lt;/em&gt;i$ to belong to the
+class $c_i$ to zero, thus making them into null absorbing nodes.&lt;/p&gt;
+
+&lt;p&gt;[H]&lt;/p&gt;
+
+&lt;p&gt;[1] the seed set $S = {S_{1},\dots,S_{k}}$ for
+concepts$C = {c_{1},\dots,c_{k}} $, the click-graph $G$ the threshold
+parameter$\gamma $, the transition probability $\alpha$ to $\omega $
+$P (\ell_{q} = c)$, for every query q and class c $P(\ell_{u}=c_{i})=0$
+$P(\ell_{u}=c)=1$
+$P(\ell_{q} = c)=(1-\alpha)\sum_{u:(q,u)\in E}\omega_{qu}P(l_{u} = c) $
+$P(\ell_{q} = c) = 0 $
+$P(\ell_{u} = c)=(1-\alpha)\sum_{q:(u,q)\in E}\omega_{uq}P(\ell_{q} = c) $
+$(\ell_{u} = c) = 0 $ Output $P (\ell_{q} = c)$, for every query q and
+class c&lt;/p&gt;
+
+&lt;p&gt;more information here[^3]&lt;/p&gt;
+
+&lt;h1 id=&quot;remain-to-be-solved&quot;&gt;REMAIN TO BE SOLVED&lt;/h1&gt;
+
+&lt;p&gt;The problems:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;other algorithms in the paper, and the comparasion between them&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;how to bid for AM&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;[^1]: Generating Query Substitutions: Jones et al, in Proc of WWW 2006&lt;/p&gt;
+
+&lt;p&gt;[^2]: we can also define the seed set as labeled queries or a mix of
+    quries and URLs. For simplicity, we will restrict ourselves to the
+    case that the seed set consists only of URLs.&lt;/p&gt;
+
+&lt;p&gt;[^3]: Using the Wisdom of the Crowds for Keyword Generation: Fuxman et
+    al., In proc of WWW 2004&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Example content</title>
+   <link href="http://agrowingtree.github.io/2016/01/02/example-content/"/>
+   <updated>2016-01-02T00:00:00+08:00</updated>
+   <id>http://agrowingtree.github.io/2016/01/02/example-content</id>
+   <content type="html">&lt;div class=&quot;message&quot;&gt;
+  Howdy! This is an example blog post that shows several types of HTML content supported in this theme.
+&lt;/div&gt;
+
+&lt;p&gt;Cum sociis natoque penatibus et magnis &lt;a href=&quot;#&quot;&gt;dis parturient montes&lt;/a&gt;, nascetur ridiculus mus. &lt;em&gt;Aenean eu leo quam.&lt;/em&gt; Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Etiam porta &lt;strong&gt;sem malesuada magna&lt;/strong&gt; mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.&lt;/p&gt;
+
+&lt;h2 id=&quot;inline-html-elements&quot;&gt;Inline HTML elements&lt;/h2&gt;
+
+&lt;p&gt;HTML defines a long list of available inline tags, a complete list of which can be found on the &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/HTML/Element&quot;&gt;Mozilla Developer Network&lt;/a&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;To bold text&lt;/strong&gt;, use &lt;code&gt;&amp;lt;strong&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;To italicize text&lt;/em&gt;, use &lt;code&gt;&amp;lt;em&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Abbreviations, like &lt;abbr title=&quot;HyperText Markup Langage&quot;&gt;HTML&lt;/abbr&gt; should use &lt;code&gt;&amp;lt;abbr&amp;gt;&lt;/code&gt;, with an optional &lt;code&gt;title&lt;/code&gt; attribute for the full phrase.&lt;/li&gt;
+&lt;li&gt;Citations, like &lt;cite&gt;&amp;mdash; Mark otto&lt;/cite&gt;, should use &lt;code&gt;&amp;lt;cite&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;del&gt;Deleted&lt;/del&gt; text should use &lt;code&gt;&amp;lt;del&amp;gt;&lt;/code&gt; and &lt;ins&gt;inserted&lt;/ins&gt; text should use &lt;code&gt;&amp;lt;ins&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Superscript &lt;sup&gt;text&lt;/sup&gt; uses &lt;code&gt;&amp;lt;sup&amp;gt;&lt;/code&gt; and subscript &lt;sub&gt;text&lt;/sub&gt; uses &lt;code&gt;&amp;lt;sub&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Most of these elements are styled by browsers with few modifications on our part.&lt;/p&gt;
+
+&lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
+
+&lt;p&gt;Footnotes are supported as part of the Markdown syntax. Here&amp;#39;s one in action. Clicking this number[^fn-sample_footnote] will lead you to a footnote. The syntax looks like:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Clicking this number[^fn-sample_footnote]&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Each footnote needs the &lt;code&gt;^fn-&lt;/code&gt; prefix and a unique ID to be referenced for the footnoted content. The syntax for that list looks something like this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;[^fn-sample_footnote]: Handy! Now click the return link to go back.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;You can place the footnoted content wherever you like. Markdown parsers should properly place it at the bottom of the post.&lt;/p&gt;
+
+&lt;h2 id=&quot;heading&quot;&gt;Heading&lt;/h2&gt;
+
+&lt;p&gt;Vivamus sagittis lacus vel augue rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.&lt;/p&gt;
+
+&lt;h3 id=&quot;code&quot;&gt;Code&lt;/h3&gt;
+
+&lt;p&gt;Inline code is available with the &lt;code&gt;&amp;lt;code&amp;gt;&lt;/code&gt; element. Snippets of multiple lines of code are supported through Pygments. Longer lines will automatically scroll horizontally when needed.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Example can be run directly in your JavaScript console
+&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Create a function that takes two arguments and returns the sum of those arguments
+&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;adder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;return a + b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Call the function
+&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;adder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// &amp;gt; 8&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;You may also optionally show code snippets with line numbers. Add &lt;code&gt;linenos&lt;/code&gt; to the Pygments tags.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c1&quot;&gt;// Example can be run directly in your JavaScript console
+&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Create a function that takes two arguments and returns the sum of those arguments
+&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;adder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;return a + b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Call the function
+&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;adder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// &amp;gt; 8&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.&lt;/p&gt;
+
+&lt;h3 id=&quot;gists-via-github-pages&quot;&gt;Gists via GitHub Pages&lt;/h3&gt;
+
+&lt;p&gt;Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Donec sed odio dui.&lt;/p&gt;
+
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/13f94b734a4ddb132735.js?file=gist.md&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec sed odio dui. Vestibulum id ligula porta felis euismod semper.&lt;/p&gt;
+
+&lt;h3 id=&quot;lists&quot;&gt;Lists&lt;/h3&gt;
+
+&lt;p&gt;Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Praesent commodo cursus magna, vel scelerisque nisl consectetur et.&lt;/li&gt;
+&lt;li&gt;Donec id elit non mi porta gravida at eget metus.&lt;/li&gt;
+&lt;li&gt;Nulla vitae elit libero, a pharetra augue.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Vestibulum id ligula porta felis euismod semper.&lt;/li&gt;
+&lt;li&gt;Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.&lt;/li&gt;
+&lt;li&gt;Maecenas sed diam eget risus varius blandit sit amet non magna.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.&lt;/p&gt;
+
+&lt;dl&gt;
+  &lt;dt&gt;HyperText Markup Language (HTML)&lt;/dt&gt;
+  &lt;dd&gt;The language used to describe and define the content of a Web page&lt;/dd&gt;
+
+  &lt;dt&gt;Cascading Style Sheets (CSS)&lt;/dt&gt;
+  &lt;dd&gt;Used to describe the appearance of Web content&lt;/dd&gt;
+
+  &lt;dt&gt;JavaScript (JS)&lt;/dt&gt;
+  &lt;dd&gt;The programming language used to build advanced Web sites and applications&lt;/dd&gt;
+&lt;/dl&gt;
+
+&lt;p&gt;Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam quis risus eget urna mollis ornare vel eu leo.&lt;/p&gt;
+
+&lt;h3 id=&quot;images&quot;&gt;Images&lt;/h3&gt;
+
+&lt;p&gt;Quisque consequat sapien eget quam rhoncus, sit amet laoreet diam tempus. Aliquam aliquam metus erat, a pulvinar turpis suscipit at.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://placehold.it/800x400&quot; alt=&quot;placeholder&quot; title=&quot;Large example image&quot;&gt;
+&lt;img src=&quot;http://placehold.it/400x200&quot; alt=&quot;placeholder&quot; title=&quot;Medium example image&quot;&gt;
+&lt;img src=&quot;http://placehold.it/200x200&quot; alt=&quot;placeholder&quot; title=&quot;Small example image&quot;&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;tables&quot;&gt;Tables&lt;/h3&gt;
+
+&lt;p&gt;Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Upvotes&lt;/th&gt;
+      &lt;th&gt;Downvotes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Totals&lt;/td&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;23&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Alice&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
+      &lt;td&gt;11&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bob&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Charlie&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;9&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Nullam id dolor id nibh ultricies vehicula ut id elit. Sed posuere consectetur est at lobortis. Nullam quis risus eget urna mollis ornare vel eu leo.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Want to see something else added? &lt;a href=&quot;https://github.com/poole/poole/issues/new&quot;&gt;Open an issue.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;[^fn-sample_footnote]: Handy! Now click the return link to go back.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>What&#39;s Jekyll?</title>
+   <link href="http://agrowingtree.github.io/2016/01/01/whats-jekyll/"/>
+   <updated>2016-01-01T00:00:00+08:00</updated>
+   <id>http://agrowingtree.github.io/2016/01/01/whats-jekyll</id>
+   <content type="html">&lt;p&gt;&lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt; is a static site generator, an open-source tool for creating simple yet powerful websites of all shapes and sizes. From &lt;a href=&quot;https://github.com/jekyll/jekyll/blob/master/README.markdown&quot;&gt;the project&amp;#39;s readme&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Jekyll is a simple, blog aware, static site generator. It takes a template directory [...] and spits out a complete, static website suitable for serving with Apache or your favorite web server. This is also the engine behind GitHub Pages, which you can use to host your project’s page or blog right here from GitHub.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;It&amp;#39;s an immensely useful tool. Find out more by &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;visiting the project on GitHub&lt;/a&gt;.&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>

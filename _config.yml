@@ -1,0 +1,41 @@
+# Permalinks
+permalink:           pretty
+
+# Setup
+title:               Huayang
+tagline:             'Machine Learning, Computational Advertising, Algorithms'
+url:                 http://agrowingtree.github.io
+paginate:            1
+baseurl:             ""
+
+pages_list:       
+  About: '/about'
+  Summary: '/summary'
+#  Feed: '/atom.xml'
+# Assets
+#
+# We specify the directory for Jekyll so we can use @imports.
+sass:
+  sass_dir:          _sass
+  style:            :compressed
+
+# About/contact
+author:
+  name:              Huayang Li
+  url:               https://twitter.com/HuayangLi
+  email:             waajoenglei@gmail.com
+
+# Custom vars
+version:             2.0.0
+github:
+  repo:              https://github.com/agrowingtree/agrowingtree.github.io
+
+# Gems
+gems:
+  - jekyll-paginate
+  - jekyll-gist
+
+markdown: redcarpet
+
+redcarpet:
+  extensions: [autolink, no_intra_emphasis, strikethrough, tables, with_toc_data]
