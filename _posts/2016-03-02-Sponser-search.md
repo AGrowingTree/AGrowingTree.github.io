@@ -7,13 +7,12 @@ comments: True
 * [INTRODUCTION](#INTRODUCTION)
     * [Implementation Approaches](#Implementation Approaches)
     * [The two phases of ad selection](#The two phases of ad selection)
-    * [The two phases of ad selection](#The two phases of ad selection)
 * [EXACT MATCH](#EXACT MATCH)
 * [ADVANCED MATCH](#ADVANCED MATCH)
     * [Query Rewriting Basing On Query Logs](#Query Rewriting Basing On Query Logs)
         * [Definition of Query Pair](#Definition of Query Pair)
         * [Phrase Substitutions](#Phrase Substitutions)
-        * [Identifying Significant Query Pairs and Phrase Pairs](#Identifying Significant Query Pairs and Phrase Pairs)
+        * [Identifying Significant Query Pairs And Phrase Pairs](#Identifying Significant Query Pairs and Phrase Pairs)
         * [Generating Candidates](#Generating Candidates)
     * [Query Rewriting Basing On Click Data](#Query Rewriting Basing On Click Data)
         * [Problem Definition](#Problem Definition)
@@ -53,7 +52,7 @@ the problem remain to be solved in the new term.
     - BP = q (exact match) has high weight
     - No distinction between AM and EM
 
-<h3 id="The two phases of ad selection"></h3>
+<h3 id="The Two Phases Of Ad Selection">The two phases of ad selection</h3>
 
 - Ad Retrieval: Consider the whole ad corpus and select a set of most
 viable candidates (e.g. 100)

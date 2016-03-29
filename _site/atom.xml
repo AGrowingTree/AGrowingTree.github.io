@@ -4,7 +4,7 @@
  <title>Huayang</title>
  <link href="http://agrowingtree.github.io/atom.xml" rel="self"/>
  <link href="http://agrowingtree.github.io/"/>
- <updated>2016-03-29T11:53:16+08:00</updated>
+ <updated>2016-03-29T12:01:32+08:00</updated>
  <id>http://agrowingtree.github.io</id>
  <author>
    <name>Huayang Li</name>
@@ -23,7 +23,6 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#Implementation%20Approaches&quot;&gt;Implementation Approaches&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#The%20two%20phases%20of%20ad%20selection&quot;&gt;The two phases of ad selection&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#The%20two%20phases%20of%20ad%20selection&quot;&gt;The two phases of ad selection&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#EXACT%20MATCH&quot;&gt;EXACT MATCH&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#ADVANCED%20MATCH&quot;&gt;ADVANCED MATCH&lt;/a&gt;
@@ -34,7 +33,7 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#Definition%20of%20Query%20Pair&quot;&gt;Definition of Query Pair&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#Phrase%20Substitutions&quot;&gt;Phrase Substitutions&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#Identifying%20Significant%20Query%20Pairs%20and%20Phrase%20Pairs&quot;&gt;Identifying Significant Query Pairs and Phrase Pairs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#Identifying%20Significant%20Query%20Pairs%20and%20Phrase%20Pairs&quot;&gt;Identifying Significant Query Pairs And Phrase Pairs&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#Generating%20Candidates&quot;&gt;Generating Candidates&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#Query%20Rewriting%20Basing%20On%20Click%20Data&quot;&gt;Query Rewriting Basing On Click Data&lt;/a&gt;
@@ -87,7 +86,7 @@ the problem remain to be solved in the new term.&lt;/p&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;The two phases of ad selection&quot;&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;The Two Phases Of Ad Selection&quot;&gt;The two phases of ad selection&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;Ad Retrieval: Consider the whole ad corpus and select a set of most
