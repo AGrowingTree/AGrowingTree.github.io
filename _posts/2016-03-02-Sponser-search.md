@@ -4,8 +4,22 @@ title: Sponser Advertising
 comments: True
 ---
 
-INTRODUCTION
-============
+* [INTRODUCTION](#INTRODUCTION)
+    * [Implementation Approaches](#Implementation Approaches)
+    * [The two phases of ad selection](#The two phases of ad selection)
+    * [The two phases of ad selection](#The two phases of ad selection)
+* [EXACT MATCH](#EXACT MATCH)
+* [ADVANCED MATCH](#ADVANCED MATCH)
+    * [Query Rewriting Basing On Query Logs](#Query Rewriting Basing On Query Logs)
+        * [Definition of Query Pair](#Definition of Query Pair)
+        * [Phrase Substitutions](#Phrase Substitutions)
+        * [Identifying Significant Query Pairs and Phrase Pairs](#Identifying Significant Query Pairs and Phrase Pairs)
+        * [Generating Candidates](#Generating Candidates)
+    * [Query Rewriting Basing On Click Data](#Query Rewriting Basing On Click Data)
+        * [Problem Definition](#Problem Definition)
+        * [Absorbing Random Walk Algorithms](#Absorbing Random Walk Algorithms)
+
+<h2 id="INTRODUCTION">INTRODUCTION</h2>
 
 But for the SS, the web will be much more small. Once a user type the
 queries and browse on the search engines, the advertiser will bid for
@@ -22,61 +36,47 @@ because more than 80% of queries occur one time. The challenge of AM is
 queries re-writting, we’ll talk in section 2. For section 3, we’ll talk
 the problem remain to be solved in the new term.
 
-Implementation Approaches
--------------------------
+<h3 id="Implementation Approaches">Implementation Approaches</h3>
 
-1.  **The data base approach**(original Overture approach)
+####**The data base approach**(original Overture approach)
 
-    -   Ads are records in a data base
+- Ads are records in a data base
+- The bid phrase (BP) is an attribute
+- On query q, for EM consider all ads with BP=q
 
-    -   The bid phrase (BP) is an attribute
+####**The IR approach**(modern view)
 
-    -   On query q, for EM consider all ads with BP=q
+- Ads are documents in an ad corpus
+- The bid phrase is a meta-datum
+- On query q run q against the ad corpus
+    - Have a suitable ranking function (more later)
+    - BP = q (exact match) has high weight
+    - No distinction between AM and EM
 
-2.  **The IR approach**(modern view)
+<h3 id="The two phases of ad selection"></h3>
 
-    -   Ads are documents in an ad corpus
+- Ad Retrieval: Consider the whole ad corpus and select a set of most
+viable candidates (e.g. 100)
 
-    -   The bid phrase is a meta-datum
+- Ad Reordering: Re-score the candidates using a more elaborate
+scoring function to produce the final ordering
 
-    -   On query q run q against the ad corpus
-
-        -   Have a suitable ranking function (more later)
-
-        -   BP = q (exact match) has high weight
-
-        -   No distinction between AM and EM
-
-The two phases of ad selection
-------------------------------
-
--   Ad Retrieval: Consider the whole ad corpus and select a set of most
-    viable candidates (e.g. 100)
-
--   Ad Reordering: Re-score the candidates using a more elaborate
-    scoring function to produce the final ordering
-
-EXACT MATCH
-===========
+<h2 id="EXACT MATCH">EXACT MATCH</h2>
 
 What’s EM?
 
--   queries = BP(bid phrase)
-
--   e.g. if the users query is “shoes”, then only the bid phrase “shoes”
+- queries = BP(bid phrase)
+- e.g. if the users query is “shoes”, then only the bid phrase “shoes”
     will match, the “sports shoes”, “shoe” or “shoees”… will fail
     to match.
-
--   this matching type will raise up the CTR but the volume will be low,
+- this matching type will raise up the CTR but the volume will be low,
     in other words, it will reach less users.
 
-ADVANCED MATCH
-==============
+<h2 id="ADVANCED MATCH">ADVANCED MATCH</h2>
 
-Query Rewriting Basing On Query Logs
-------------------------------------
+<h3 id="Query Rewriting Basing On Query Logs">Query Rewriting Basing On Query Logs</h3>
 
-### Definition of Query Pair
+<h4 id="Definition of Query Pair">Definition of Query Pair</h4>
 
 The data used comes from logs of user web accesses. This data contains
 web searches annotated with user ID and timestamp. A *candidate
@@ -89,7 +89,7 @@ $$\begin{align}
 &\exists t: query_{t}(user_{i}, q_{1}) \land query_{t+1}(user_{i}, q_{2})\\}\end{align}
 $$
 
-### Phrase Substitutions
+<h4 id="Phrase Substitutions">Phrase Substitutions</h3>
 
 The repeated searches for the same terms, as well as query pair
 sequences repeated by the same user on the same day. We then aggregate
@@ -101,7 +101,7 @@ segment queries into phrase for example “(new york) (maps)” or “(britney
 spears) (mp3s)”. where we set the threshold κ to be
 8$$\frac{P(\alpha, \beta)}{P(\alpha),P(\beta)} > \kappa$$
 
-### Identifying Significant Query Pairs and Phrase Pairs
+<h4 id="Identifying Significant Query Pairs and Phrase Pairs"></h4>
 
 In order to distinguish related query and phrase pairs from candidate
 pairs that are unrelated, we use the pair indepen- dence hypothesis
@@ -115,8 +115,6 @@ $$\begin{aligned}
 H_{2}:P(q_{2}|q_{1})=p_{1}&\ne p_{2}=P(q_{2}|\neg q_{1}) \end{aligned}
 $$
 
-
-
 The likelihood score is $$\lambda = \frac{L(H_{1})}{L(H_{2})}$$ The test
 statistic $-2 \log \lambda$ is asymptotically $\chi^{2}$ distributed.
 Therefore we work with the log likelihood ratio score:
@@ -126,7 +124,7 @@ dependence between term $q_1$ and term $q_2$. We refer to query pairs
 and phrase pairs above a threshold for the LLR score as
 *substitutables*.
 
-### Generating Candidates
+<h4 id="Generating Candidates">Generating Candidates</h4>
 
 We seek to generate statistically significant related queries for
 arbitrary input queries. For frequent queries, we may have many
@@ -154,10 +152,12 @@ infrequent queries.
 
 more information[^1]
 
+<h3 id="Query Rewriting Basing On Click Data">Query Rewriting Basing On Click Data</h3>
+
 Query Rewriting Basing On Click Data
 ------------------------------------
 
-### Problem Definition
+<h4 id="Problem Definition">Problem Definition</h4>
 
 -   We call the set of engine click set $\mathcal L$, which is
     consisted with tuples $\langle q, u, f_{qu} \rangle$. Where $u$
@@ -165,9 +165,9 @@ Query Rewriting Basing On Click Data
     $f_{qu} $ is the number of times that the users issued query $q$ to
     the search engine and clicked on URL $u$. And
     $\mathcal Q\  \text{and}\ \mathcal U$ is the set if all
-    queries and all URLs.\
+    queries and all URLs.
     We will consider clock log $\mathcal L$ as a bipartite graph
-    $\mathcal G = \mathcal Q,\mathcal U, E)$, and
+    $\mathcal G = (\mathcal Q,\mathcal U, \mathcal E)$, and
     $(q, u)\in E \text{ with weight} f_{qu}$.
 
 -   And we define a *concepts* set
@@ -180,7 +180,7 @@ Query Rewriting Basing On Click Data
     seed set $\mathcal S$ is consists of $\langle u, c\rangle$ pairs.
     We can regard this as label the URL with concept $c_{k}$.[^2]
 
-### A Random Walk Algorithms
+<h4 id="Absorbing Random Walk Algorithms">Absorbing Random Walk Algorithms</h4>
 
 Intuitively the queries (and URLs) are related to the concept of shoes
 because they are connected closely in the graph to the seed set that
@@ -224,7 +224,6 @@ recursively computed as:
 $$P(\ell_u = c) = (1-\alpha) \sum_{q:(u,q)\in E}w_{uq}P(\ell_{q} = c) \tag{2}$$
 where $$w_{uq} = \frac{f_{uq}}{\sum_{q:(u,q)\in E}f_{uq}}$$
 
-###Absorbing Random Walk Algorithm
 
 ####**Algorithm 1** The ARW for single class:
 

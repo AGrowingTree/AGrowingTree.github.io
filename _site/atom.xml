@@ -4,7 +4,7 @@
  <title>Huayang</title>
  <link href="http://agrowingtree.github.io/atom.xml" rel="self"/>
  <link href="http://agrowingtree.github.io/"/>
- <updated>2016-03-29T09:37:43+08:00</updated>
+ <updated>2016-03-29T11:53:16+08:00</updated>
  <id>http://agrowingtree.github.io</id>
  <author>
    <name>Huayang Li</name>
@@ -17,7 +17,36 @@
    <link href="http://agrowingtree.github.io/2016/03/02/Sponser-search/"/>
    <updated>2016-03-02T00:00:00+08:00</updated>
    <id>http://agrowingtree.github.io/2016/03/02/Sponser-search</id>
-   <content type="html">&lt;h1 id=&quot;introduction&quot;&gt;INTRODUCTION&lt;/h1&gt;
+   <content type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#INTRODUCTION&quot;&gt;INTRODUCTION&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#Implementation%20Approaches&quot;&gt;Implementation Approaches&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#The%20two%20phases%20of%20ad%20selection&quot;&gt;The two phases of ad selection&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#The%20two%20phases%20of%20ad%20selection&quot;&gt;The two phases of ad selection&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#EXACT%20MATCH&quot;&gt;EXACT MATCH&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#ADVANCED%20MATCH&quot;&gt;ADVANCED MATCH&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#Query%20Rewriting%20Basing%20On%20Query%20Logs&quot;&gt;Query Rewriting Basing On Query Logs&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#Definition%20of%20Query%20Pair&quot;&gt;Definition of Query Pair&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#Phrase%20Substitutions&quot;&gt;Phrase Substitutions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#Identifying%20Significant%20Query%20Pairs%20and%20Phrase%20Pairs&quot;&gt;Identifying Significant Query Pairs and Phrase Pairs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#Generating%20Candidates&quot;&gt;Generating Candidates&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#Query%20Rewriting%20Basing%20On%20Click%20Data&quot;&gt;Query Rewriting Basing On Click Data&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#Problem%20Definition&quot;&gt;Problem Definition&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#Absorbing%20Random%20Walk%20Algorithms&quot;&gt;Absorbing Random Walk Algorithms&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;INTRODUCTION&quot;&gt;INTRODUCTION&lt;/h2&gt;
 
 &lt;p&gt;But for the SS, the web will be much more small. Once a user type the
 queries and browse on the search engines, the advertiser will bid for
@@ -34,33 +63,31 @@ because more than 80% of queries occur one time. The challenge of AM is
 queries re-writting, we’ll talk in section 2. For section 3, we’ll talk
 the problem remain to be solved in the new term.&lt;/p&gt;
 
-&lt;h2 id=&quot;implementation-approaches&quot;&gt;Implementation Approaches&lt;/h2&gt;
+&lt;h3 id=&quot;Implementation Approaches&quot;&gt;Implementation Approaches&lt;/h3&gt;
 
-&lt;ol&gt;
-&lt;li&gt; &lt;strong&gt;The data base approach&lt;/strong&gt;(original Overture approach)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;-   Ads are records in a data base
+&lt;h4 id=&quot;the-data-base-approach-original-overture-approach&quot;&gt;&lt;strong&gt;The data base approach&lt;/strong&gt;(original Overture approach)&lt;/h4&gt;
 
--   The bid phrase (BP) is an attribute
+&lt;ul&gt;
+&lt;li&gt;Ads are records in a data base&lt;/li&gt;
+&lt;li&gt;The bid phrase (BP) is an attribute&lt;/li&gt;
+&lt;li&gt;On query q, for EM consider all ads with BP=q&lt;/li&gt;
+&lt;/ul&gt;
 
--   On query q, for EM consider all ads with BP=q
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;ol&gt;
-&lt;li&gt; &lt;strong&gt;The IR approach&lt;/strong&gt;(modern view)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;-   Ads are documents in an ad corpus
+&lt;h4 id=&quot;the-ir-approach-modern-view&quot;&gt;&lt;strong&gt;The IR approach&lt;/strong&gt;(modern view)&lt;/h4&gt;
 
--   The bid phrase is a meta-datum
+&lt;ul&gt;
+&lt;li&gt;Ads are documents in an ad corpus&lt;/li&gt;
+&lt;li&gt;The bid phrase is a meta-datum&lt;/li&gt;
+&lt;li&gt;On query q run q against the ad corpus
 
--   On query q run q against the ad corpus
+&lt;ul&gt;
+&lt;li&gt;Have a suitable ranking function (more later)&lt;/li&gt;
+&lt;li&gt;BP = q (exact match) has high weight&lt;/li&gt;
+&lt;li&gt;No distinction between AM and EM&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-    -   Have a suitable ranking function (more later)
-
-    -   BP = q (exact match) has high weight
-
-    -   No distinction between AM and EM
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&quot;the-two-phases-of-ad-selection&quot;&gt;The two phases of ad selection&lt;/h2&gt;
+&lt;h3 id=&quot;The two phases of ad selection&quot;&gt;&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;Ad Retrieval: Consider the whole ad corpus and select a set of most
@@ -69,24 +96,24 @@ viable candidates (e.g. 100)&lt;/p&gt;&lt;/li&gt;
 scoring function to produce the final ordering&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&quot;exact-match&quot;&gt;EXACT MATCH&lt;/h1&gt;
+&lt;h2 id=&quot;EXACT MATCH&quot;&gt;EXACT MATCH&lt;/h2&gt;
 
 &lt;p&gt;What’s EM?&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;queries = BP(bid phrase)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;e.g. if the users query is “shoes”, then only the bid phrase “shoes”
+&lt;li&gt;queries = BP(bid phrase)&lt;/li&gt;
+&lt;li&gt;e.g. if the users query is “shoes”, then only the bid phrase “shoes”
 will match, the “sports shoes”, “shoe” or “shoees”… will fail
-to match.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;this matching type will raise up the CTR but the volume will be low,
-in other words, it will reach less users.&lt;/p&gt;&lt;/li&gt;
+to match.&lt;/li&gt;
+&lt;li&gt;this matching type will raise up the CTR but the volume will be low,
+in other words, it will reach less users.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&quot;advanced-match&quot;&gt;ADVANCED MATCH&lt;/h1&gt;
+&lt;h2 id=&quot;ADVANCED MATCH&quot;&gt;ADVANCED MATCH&lt;/h2&gt;
 
-&lt;h2 id=&quot;query-rewriting-basing-on-query-logs&quot;&gt;Query Rewriting Basing On Query Logs&lt;/h2&gt;
+&lt;h3 id=&quot;Query Rewriting Basing On Query Logs&quot;&gt;Query Rewriting Basing On Query Logs&lt;/h3&gt;
 
-&lt;h3 id=&quot;definition-of-query-pair&quot;&gt;Definition of Query Pair&lt;/h3&gt;
+&lt;h4 id=&quot;Definition of Query Pair&quot;&gt;Definition of Query Pair&lt;/h4&gt;
 
 &lt;p&gt;The data used comes from logs of user web accesses. This data contains
 web searches annotated with user ID and timestamp. A *candidate
@@ -99,19 +126,19 @@ pairs. &lt;/p&gt;
 &amp;amp;\exists t: query_{t}(user_{i}, q_{1}) \land query_{t+1}(user_{i}, q_{2})\}\end{align}
 $$&lt;/p&gt;
 
-&lt;h3 id=&quot;phrase-substitutions&quot;&gt;Phrase Substitutions&lt;/h3&gt;
+&lt;h4 id=&quot;Phrase Substitutions&quot;&gt;Phrase Substitutions&lt;/h3&gt;
 
-&lt;p&gt;The repeated searches for the same terms, as well as query pair
+The repeated searches for the same terms, as well as query pair
 sequences repeated by the same user on the same day. We then aggregate
 over users, so the data for a single day consists of all candidate
-reformulations for all users for that day.&lt;/p&gt;
+reformulations for all users for that day.
 
-&lt;p&gt;then use the phrases identified by high point-wise mutual information we
+then use the phrases identified by high point-wise mutual information we
 segment queries into phrase for example “(new york) (maps)” or “(britney
 spears) (mp3s)”. where we set the threshold κ to be
-8$$\frac{P(\alpha, \beta)}{P(\alpha),P(\beta)} &amp;gt; \kappa$$&lt;/p&gt;
+8$$\frac{P(\alpha, \beta)}{P(\alpha),P(\beta)} &gt; \kappa$$
 
-&lt;h3 id=&quot;identifying-significant-query-pairs-and-phrase-pairs&quot;&gt;Identifying Significant Query Pairs and Phrase Pairs&lt;/h3&gt;
+&lt;h4 id=&quot;Identifying Significant Query Pairs and Phrase Pairs&quot;&gt;&lt;/h4&gt;
 
 &lt;p&gt;In order to distinguish related query and phrase pairs from candidate
 pairs that are unrelated, we use the pair indepen- dence hypothesis
@@ -134,7 +161,7 @@ dependence between term $q_1$ and term $q_2$. We refer to query pairs
 and phrase pairs above a threshold for the LLR score as
 &lt;em&gt;substitutables&lt;/em&gt;.&lt;/p&gt;
 
-&lt;h3 id=&quot;generating-candidates&quot;&gt;Generating Candidates&lt;/h3&gt;
+&lt;h4 id=&quot;Generating Candidates&quot;&gt;Generating Candidates&lt;/h4&gt;
 
 &lt;p&gt;We seek to generate statistically significant related queries for
 arbitrary input queries. For frequent queries, we may have many
@@ -163,9 +190,11 @@ new phrases: $q_i \mapsto p_1\dots p_j^{\prime}\dots p_n$&lt;/li&gt;
 
 &lt;p&gt;more information[^1]&lt;/p&gt;
 
+&lt;h3 id=&quot;Query Rewriting Basing On Click Data&quot;&gt;Query Rewriting Basing On Click Data&lt;/h3&gt;
+
 &lt;h2 id=&quot;query-rewriting-basing-on-click-data&quot;&gt;Query Rewriting Basing On Click Data&lt;/h2&gt;
 
-&lt;h3 id=&quot;problem-definition&quot;&gt;Problem Definition&lt;/h3&gt;
+&lt;h4 id=&quot;Problem Definition&quot;&gt;Problem Definition&lt;/h4&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;We call the set of engine click set $\mathcal L$, which is
@@ -174,9 +203,9 @@ represent the URL and the $q$ represent the query. What’s more,
 $f_{qu} $ is the number of times that the users issued query $q$ to
 the search engine and clicked on URL $u$. And
 $\mathcal Q\  \text{and}\ \mathcal U$ is the set if all
-queries and all URLs.\
+queries and all URLs.
 We will consider clock log $\mathcal L$ as a bipartite graph
-$\mathcal G = \mathcal Q,\mathcal U, E)$, and
+$\mathcal G = (\mathcal Q,\mathcal U, \mathcal E)$, and
 $(q, u)\in E \text{ with weight} f_{qu}$.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;And we define a &lt;em&gt;concepts&lt;/em&gt; set
 $\mathcal C = {c_{1}, c_{2}, \dots, c_{k} } $. The element in
@@ -188,7 +217,7 @@ seed set $\mathcal S$ is consists of $\langle u, c\rangle$ pairs.
 We can regard this as label the URL with concept $c_{k}$.[^2]&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;a-random-walk-algorithms&quot;&gt;A Random Walk Algorithms&lt;/h3&gt;
+&lt;h4 id=&quot;Absorbing Random Walk Algorithms&quot;&gt;Absorbing Random Walk Algorithms&lt;/h4&gt;
 
 &lt;p&gt;Intuitively the queries (and URLs) are related to the concept of shoes
 because they are connected closely in the graph to the seed set that
@@ -231,8 +260,6 @@ seed set, and zero otherwise&lt;/p&gt;
 recursively computed as:
 $$P(\ell_u = c) = (1-\alpha) \sum_{q:(u,q)\in E}w_{uq}P(\ell_{q} = c) \tag{2}$$
 where $$w_{uq} = \frac{f_{uq}}{\sum_{q:(u,q)\in E}f_{uq}}$$&lt;/p&gt;
-
-&lt;h3 id=&quot;absorbing-random-walk-algorithm&quot;&gt;Absorbing Random Walk Algorithm&lt;/h3&gt;
 
 &lt;h4 id=&quot;algorithm-1-the-arw-for-single-class&quot;&gt;&lt;strong&gt;Algorithm 1&lt;/strong&gt; The ARW for single class:&lt;/h4&gt;
 
