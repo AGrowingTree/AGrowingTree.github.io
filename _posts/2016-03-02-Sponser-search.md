@@ -6,13 +6,13 @@ comments: True
 
 * [INTRODUCTION](#INTRODUCTION)
     * [Implementation Approaches](#Implementation Approaches)
-    * [The two phases of ad selection](#The two phases of ad selection)
+    * [The Two Phases Of Ad Selection](#The Two Phases Of Ad Selection)
 * [EXACT MATCH](#EXACT MATCH)
 * [ADVANCED MATCH](#ADVANCED MATCH)
     * [Query Rewriting Basing On Query Logs](#Query Rewriting Basing On Query Logs)
-        * [Definition of Query Pair](#Definition of Query Pair)
+        * [Definition Of Query Pair](#Definition Of Query Pair)
         * [Phrase Substitutions](#Phrase Substitutions)
-        * [Identifying Significant Query Pairs And Phrase Pairs](#Identifying Significant Query Pairs and Phrase Pairs)
+        * [Identifying Significant Query Pairs And Phrase Pairs](#Identifying Significant Query Pairs And Phrase Pairs)
         * [Generating Candidates](#Generating Candidates)
     * [Query Rewriting Basing On Click Data](#Query Rewriting Basing On Click Data)
         * [Problem Definition](#Problem Definition)
@@ -52,7 +52,7 @@ the problem remain to be solved in the new term.
     - BP = q (exact match) has high weight
     - No distinction between AM and EM
 
-<h3 id="The Two Phases Of Ad Selection">The two phases of ad selection</h3>
+<h3 id="The Two Phases Of Ad Selection">The Two Phases Of Ad Selection</h3>
 
 - Ad Retrieval: Consider the whole ad corpus and select a set of most
 viable candidates (e.g. 100)
@@ -75,7 +75,7 @@ What’s EM?
 
 <h3 id="Query Rewriting Basing On Query Logs">Query Rewriting Basing On Query Logs</h3>
 
-<h4 id="Definition of Query Pair">Definition of Query Pair</h4>
+<h4 id="Definition Of Query Pair">Definition Of Query Pair</h4>
 
 The data used comes from logs of user web accesses. This data contains
 web searches annotated with user ID and timestamp. A *candidate
@@ -100,7 +100,7 @@ segment queries into phrase for example “(new york) (maps)” or “(britney
 spears) (mp3s)”. where we set the threshold κ to be
 8$$\frac{P(\alpha, \beta)}{P(\alpha),P(\beta)} > \kappa$$
 
-<h4 id="Identifying Significant Query Pairs and Phrase Pairs"></h4>
+<h4 id="Identifying Significant Query Pairs And Phrase Pairs">Identifying Significant Query Pairs And Phrase Pairs</h4>
 
 In order to distinguish related query and phrase pairs from candidate
 pairs that are unrelated, we use the pair indepen- dence hypothesis
