@@ -4,13 +4,13 @@ title: About
 ---
 
 <p class="message">
-  Hi! This is Huayang Li's blog. I hope we can learn from each other.
+  Hi! Here is Huayang Li's blog. I hope we can learn from each other.
 </p>
 
 I am an ungraduated university student in CCNU, which is located in Wu Han. 
 I am a beginer in programming, and I love it!
 
-This is what I am learning now:
+These are what I am learning now:
 
 * Machine Learning
 * Computational Advertising

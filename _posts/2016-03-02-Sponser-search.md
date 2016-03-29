@@ -176,7 +176,7 @@ Query Rewriting Basing On Click Data
     complex cases we may have different classes in a taxonomy.
 
 -   A *seed set*
-    $\mathcal S \subseteq\mathcal U\time\mathcal C$, and the
+    $\mathcal S \subseteq\mathcal U\times\mathcal C$, and the
     seed set $\mathcal S$ is consists of $\langle u, c\rangle$ pairs.
     We can regard this as label the URL with concept $c_{k}$.[^2]
 
@@ -212,27 +212,54 @@ the concept label for query $q$ (or URL $u$). We want to compute
 $P(\ell_{q} = c) $Let $\alpha$ be the probability of making a transition
 to the null class absorbing node, from any node in the graph. Then we
 have that:
-$$P(\ell_q = c) = (1-\alpha) \sum_{u:(q,u)\in E}w_{qu}P(\ell_{u} = c) \eqno{(1)}$$
+$$
+P(\ell_q = c) = (1-\alpha) \sum_{u:(q,u)\in E}w_{qu}P(\ell_{u} = c)\tag{1}
+$$
 where $$w_{qu} = \frac{f_{qu}}{\sum_{u:(q,u)\in E}f_{qu}}$$ we have that
 $P(\ell_u = c) = 1 $ if the pair $\langle u, c\rangle$ belongs in the
 seed set, and zero otherwise
 
 For all other URLs, the probability $P(\ell_{u} = c) $ is again
 recursively computed as:
-$$P(\ell_u = c) = (1-\alpha) \sum_{q:(u,q)\in E}w_{uq}P(\ell_{q} = c) \eqno{(2)}$$
+$$P(\ell_u = c) = (1-\alpha) \sum_{q:(u,q)\in E}w_{uq}P(\ell_{q} = c) \tag{2}$$
 where $$w_{uq} = \frac{f_{uq}}{\sum_{q:(u,q)\in E}f_{uq}}$$
 
-\[H\]
+###Absorbing Random Walk Algorithm
 
-\[1\] the seed set $\mathcal S$ for class $c$, the click-graph
+####**Algorithm 1** The ARW for single class:
+
+>**Require**the seed set $\mathcal S$ for class $c$, the click-graph
 $\mathcal G$, the threshold parameter $\gamma$ , the transition
-probability $\alpha$ to $\omega$ $P (\ell_{q} = c)$, for every query q
-$P(\ell_{u}=c)=1$
-$P(\ell_{q} = c)=(1-\alpha)\sum_{u:(q,u)\in E}\omega_{qu}P(\ell_{u} = c) $
-$P(\ell_{q} = c) = 0 $
-$P(\ell_{u} = c)=(1-\alpha)\sum_{q:(u,q)\in E}\omega_{uq}P(\ell_{q} = c) $
-$(\ell_{u} = c) = 0 $ Output $P (\ell_{q} = c)$, for every query $q$ and
-class $\mathcal Q $
+probability $\alpha$ to $\omega$
+
+>**Ensure** $P (\ell_{q} = c)$, for every query q
+
+>**for** $u \in \mathcal S$ **do**
+>
+> >$P(\ell_{u}=c)=1$
+>**end for** 
+>
+>**repeat** 
+>
+> >**for all** $q \in \mathcal Q$ **do**
+> >
+> > >$P(\ell_{q} = c)=(1-\alpha)\sum_{u:(q,u)\in E}\omega_{qu}P(\ell_{u} = c) $
+> > > 
+> > >**if** $P(\ell_{q} = c) < \gamma$ **then** $P(\ell_{q} = c) = 0 $
+> >
+> >**end for**
+> >
+> >**for all** $u \in \mathcal U \backslash S$
+> > 
+> > >$P(\ell_{u} = c)=(1-\alpha)\sum_{q:(u,q)\in E}\omega_{uq}P(\ell_{q} = c) $
+> > >
+> > >**if** $P(\ell_{u} = c) < \gamma$ **then** $P(\ell_{u} = c) = 0$
+> > 
+> >**end for**
+> 
+>**until** convergence
+>
+>Output $P (\ell_{q} = c)$, for every query $q$ and class $\mathcal Q $
 
 The algorithm generalizes naturally to the case where there are multiple
 concepts, but this process is memory intensive since it requires to
@@ -251,18 +278,53 @@ much smaller fraction of click graphy. we fix the probability of the
 nodes in $\mathcal S \backslash\mathcal S_i$ to belong to the
 class $c_i$ to zero, thus making them into null absorbing nodes.
 
-\[H\]
+>**Require**the seed set $\mathcal S$ for class $c$, the click-graph
+$\mathcal G$, the threshold parameter $\gamma$ , the transition
+probability $\alpha$ to $\omega$
 
-\[1\] the seed set $S = \{S_{1},\dots,S_{k}\}$ for
-concepts$C = \{c_{1},\dots,c_{k}\} $, the click-graph $G$ the threshold
-parameter$\gamma $, the transition probability $\alpha$ to $\omega $
-$P (\ell_{q} = c)$, for every query q and class c $P(\ell_{u}=c_{i})=0$
-$P(\ell_{u}=c)=1$
-$P(\ell_{q} = c)=(1-\alpha)\sum_{u:(q,u)\in E}\omega_{qu}P(l_{u} = c) $
-$P(\ell_{q} = c) = 0 $
-$P(\ell_{u} = c)=(1-\alpha)\sum_{q:(u,q)\in E}\omega_{uq}P(\ell_{q} = c) $
-$(\ell_{u} = c) = 0 $ Output $P (\ell_{q} = c)$, for every query q and
-class c
+####**Algorithm 2** The ARW for multiple class:
+
+>**Require** the seed set $\mathcal S = \\{\mathcal S_{1},\dots,\mathcal S_{k}\\}$ for concepts $\mathcal C = \\{c_{1},\dots,c_{k}\\} $, the click-graph $\mathcal G$ the threshold parameter$\gamma $, the transition probability $\alpha$ to $\omega $
+
+>**Ensure** $P (\ell_{q} = c)$, for every query q
+
+>**for all** $c_{i} \in \mathcal C$ **do**
+> >
+> >**for** $u \in \mathcal S \backslash \mathcal S_{i}$
+> >
+> > >$P(\ell_{u}=c_{i})=0$
+> >
+> >**end for**
+> >
+> >**for** $u \in \mathcal S_{i}$ 
+> >
+> > >$P(\ell_{u}=c)=1$
+> >
+> >**end for** 
+>
+> >**repeat** 
+> >
+> > >**for all** $q \in \mathcal Q$ **do**
+> > >
+> > > >$P(\ell_{q} = c)=(1-\alpha)\sum_{u:(q,u)\in E}\omega_{qu}P(\ell_{u} = c) $
+> > > >
+> > > >**if** $P(\ell_{q} = c) < \gamma$ **then** $P(\ell_{q} = c) = 0$
+> > >
+> > >**end for**
+> > >
+> > >**for all** $u \in \mathcal U \backslash S$
+> > >
+> > > >$P(\ell_{u} = c)=(1-\alpha)\sum_{q:(u,q)\in E}\omega_{uq}P(\ell_{q} = c) $
+> > > >
+> > > >**if** $P(\ell_{u} = c) < \gamma$ **then** $P(\ell_{u} = c) = 0$
+> > >
+> > >**end for**
+> >
+> >**until** convergence
+>
+> >Output $P (\ell_{q} = c)$, for every query $q$ and class $\mathcal C $
+>
+>**end for**
 
 more information here[^3]
 
