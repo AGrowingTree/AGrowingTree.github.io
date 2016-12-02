@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Sponser Advertising
+title: Sponsor Search
 comments: True
 ---
 

@@ -10,7 +10,7 @@ baseurl:             ""
 
 pages_list:       
   About: '/about'
-  Summary: '/summary'
+  Archive: '/Archive'
 #  Feed: '/atom.xml'
 # Assets
 #

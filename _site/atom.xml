@@ -4,7 +4,7 @@
  <title>Huayang</title>
  <link href="http://agrowingtree.github.io/atom.xml" rel="self"/>
  <link href="http://agrowingtree.github.io/"/>
- <updated>2016-03-31T21:43:32+08:00</updated>
+ <updated>2016-12-02T17:52:25+08:00</updated>
  <id>http://agrowingtree.github.io</id>
  <author>
    <name>Huayang Li</name>
@@ -13,7 +13,166 @@
 
  
  <entry>
-   <title>Sponser Advertising</title>
+   <title>算法笔记一</title>
+   <link href="http://agrowingtree.github.io/2016/04/06/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
+   <updated>2016-04-06T00:00:00+08:00</updated>
+   <id>http://agrowingtree.github.io/2016/04/06/算法笔记</id>
+   <content type="html">&lt;blockquote&gt;
+&lt;p&gt;本文基于刘汝佳的《算法竞赛入门经典训练指南》第一章，总结阅读第一章的收获&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;1&quot;&gt;1. 新的算法&lt;/h2&gt;
+
+&lt;h3 id=&quot;1-1-floyd&quot;&gt;1.1 Floyd 判圈算法&lt;/h3&gt;
+
+&lt;h4 id=&quot;&gt;算法简介&lt;/h4&gt;
+
+&lt;p&gt;Floyd判圈算法(Floyd&amp;#39;s Cycle-Finding Algorithm) 在&lt;a href=&quot;https://uva.onlinejudge.org/external/115/11549.pdf&quot;&gt;计算器谜题&lt;/a&gt;中提到。其实对于判圈，我们有一种很直觉的算法:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c++&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//伪代码
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findCycle&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mylist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;hashTable&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//哈希表 存储已访问过的节点
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mylist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//该节点已经访问过，发现环
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//未发现环
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;但是这种算法空间开销较大。&lt;/p&gt;
+
+&lt;p&gt;Floyd 判圈算法能够在 $O(n)$ 的时间复杂度和 $O(1)$ 的空间复杂度内，判断是否存在环、环的起点、计算环的长度。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c++&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//伪代码
+&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cycleLen&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cycleStart&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hasCycle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//判断环是否存在
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;List&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mylist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mylist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;hasCycle&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//n2已经到达链表末尾，没有环
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;hasCycle&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//发现环
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hasCycle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//环的长度
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cycleLen&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;      
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//环起点
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mylist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cycleStart&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;&gt;证明&lt;/h4&gt;
+
+&lt;p&gt;对于Floyd判圈算法判断环是否存在的证明很容易想到，如果有环，另个速度不同的指针陷入无限循环中一定会相遇，若速度快的指针可以到达末端则不存在环。求环的长度同样很简单。&lt;/p&gt;
+
+&lt;p&gt;​Floyd判圈算法求环的起点，&lt;a href=&quot;https://www.quora.com/How-does-Floyds-cycle-finding-algorithm-work/answer/Atul-Yadav-2&quot;&gt;Quora上的回答&lt;/a&gt;非常精彩。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/hychn/hychn.github.io/img/floyd.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;速度较慢的指针走过的距离为: $slowDistance = x+y$ &lt;/p&gt;
+
+&lt;p&gt;速度较快的指针走过的距离为: $fastDistance= x+y+z+y $&lt;/p&gt;
+
+&lt;p&gt;​ 另外我们知道快指针的速度是慢指针的两倍，所以在相同的时间内，$fastDistance = 2 \times slowDistance$， 所以我们可以推出:
+$$
+\begin{align}
+2(x+y)&amp;amp; = x+y+z+y\\
+x &amp;amp;=z
+\end{align}
+$$
+​记住之前指针环绕圈的方向是顺时针（逆时针同理，但是两个指针的方向必须是一样的），把其中一个指针的位置重置到首端（假设为p1），两个指针都以速度$1$移动。因为$x = z$，当p1运动距离$x$，p2运动$z$，两个指针恰好相遇到环的起点。&lt;/p&gt;
+
+&lt;h4 id=&quot;&gt;使用范围&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;此部分是个人想法，欢迎指正&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;​我们最熟悉的判断环的算法是在图论中，同样简单而实用。利用一个&lt;code&gt;marked[]&lt;/code&gt;数组，利用深度优先搜索，如果某一节点已经被标记过并且不是该节点的父节点，则发现环。&lt;/p&gt;
+
+&lt;p&gt;​我们发现Floyd判圈算法&lt;strong&gt;一般应用在出度为1的情况&lt;/strong&gt;，那是否可以应用到复杂的图中呢？在复杂的图中，从一个节点可以到不只一个节点，我们除了保存两个速度不同的指针，最终还必须保存从该节点出发的哪些节点被访问过哪些没有被访问，再使用Floyd算法意义就不大了。所以Floyd算法应该应用在，经过某些规则，有且仅有一个新节点可以从该点到达，这个过程可以是链表的访问，也可以是某种函数计算。&lt;/p&gt;
+
+&lt;h3 id=&quot;1-2&quot;&gt;1.2 中间相遇算法&lt;/h3&gt;
+
+&lt;p&gt;​中间相遇算法(meet in themiddle)在&lt;a href=&quot;http://acm.tju.edu.cn/toj/vcontest/showp2464_J.html&quot;&gt;侏罗纪&lt;/a&gt;中用到。中间相遇算法实际上是暴力搜索时的一种小技巧，下面是一道经典例题:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给出N(N$\leq$ 40)个整数，每个整数的大小为 $10^{12}$ ，找出集合中元素的和小于或者等于S ( S $\leq 10^{18}$)最大的集合（determine the largest sum subset having sum less than or equal S）&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;​考虑到集合中元素可以是无序的，虽然$2^{40}$无法暴力求解但是$2^{20}$利用暴力法是可行的。我们将N个整数划分为(S1 S2)两个集合分为前N/2个和后N/2个的集合，分别计算子集和，然后存储在集合X和Y中。将集合Y排序，遍历X中所有的元素，利用二分法在Y集合中找到&lt;code&gt;X[i]+Y[j]&amp;lt;=S&lt;/code&gt;的最大元素&lt;code&gt;Y[j]&lt;/code&gt;，不断更新&lt;code&gt;ans =max(ans,X[i]+Y[j])&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;​中间相遇算法适用的条件是:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;对于集合中元素的先后顺序无要求&lt;/li&gt;
+&lt;li&gt;时间复杂度比较大但是又不那么大&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;详细内容请参考这份&lt;a href=&quot;https://www.quora.com/What-is-meet-in-the-middle-algorithm-w-r-t-competitive-programming/answer/Swarn-Avinash-Kumar&quot;&gt;Quora回答&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2&quot;&gt;2. 实用的思想&lt;/h2&gt;
+
+&lt;h3 id=&quot;2-1&quot;&gt;2.1 二分思想&lt;/h3&gt;
+
+&lt;p&gt;之前我对二分的理解仅限于固定的二分查找，二分查找的核心思想就两个:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;数组有序&lt;/li&gt;
+&lt;li&gt;折半查找&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;在刘汝佳的书中，我们看到很多用二分思想的例子，对谁二分？不应该再仅限于数组，如果知道一个下界&lt;code&gt;lowerBound&lt;/code&gt;的实数或者整数，还有一个&lt;code&gt;upperBound&lt;/code&gt;。那么从&lt;code&gt;lowerBound&lt;/code&gt;到&lt;code&gt;upperBound&lt;/code&gt;的实数就是天然的递增数组。我们再此基础上进行查找，同样可以压缩空间复杂度。利用二分思想的的例题很多，就不再列举。&lt;/p&gt;
+
+&lt;h3 id=&quot;2-2&quot;&gt;2.2 维护信息&lt;/h3&gt;
+
+&lt;p&gt;​这道&lt;a href=&quot;https://uva.onlinejudge.org/external/110/p11078.pdf&quot;&gt;开放式学分制&lt;/a&gt;的例题很有意义，将查找的时间由$O(n^2)$压缩到$O(n)$。之前在USACO上遇到一道题，也是用到了维护信息的思想。平时最习惯的就是&lt;code&gt;for(i=0;i&amp;lt;n;i++)&lt;/code&gt;这样直接开始查找，但是有些时候，上一步查找到的元素是某个局部最优解，当我们遇到更优解时才更新它。&lt;/p&gt;
+
+&lt;h3 id=&quot;2-3&quot;&gt;2.3 高维压缩&lt;/h3&gt;
+
+&lt;p&gt;​问题求解的思路应该是首先确定一个蠢慢但是正确的算法，然后再进一步优化，只保留最有用的信息，减少复杂度。当遇到高维问题时，我们应该首先从低纬度的问题考虑，尝试能否从低维扩展到高维。如这道&lt;a href=&quot;https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;amp;Itemid=8&amp;amp;page=show_problem&amp;amp;problem=1696&quot;&gt;三维矩阵求和最大的子矩阵&lt;/a&gt;，首先考虑到子矩阵一定是连续的，想到一个相似的一维问题，求数组和最大的连续子数组，这个可以再$O(n)$内解决。能否扩展到二维？对于一个二维的子矩阵，可以以x或者y为方向进行压缩（求和），变换成一个等价问题的一维数组。&lt;/p&gt;
+
+&lt;p&gt;​当我们找到压缩的方法之后，压缩的时间复杂度成为一个问题，可以利用接下来讲的前缀思想进行预计算。&lt;/p&gt;
+
+&lt;h3 id=&quot;2-4&quot;&gt;2.4 前缀思想&lt;/h3&gt;
+
+&lt;p&gt;​前缀思想最初接触到的就是计算序列$A_i,A_{i+1},\dots,A_{j}$的序列和的时候，可以预计算数组B，$B_i = A_0, A_1,\dots,A{i}$ 则序列可以用$B_j-B_{i-1}$在$O(1)$的时间内得到。前缀的思想可以推广到高维，而且曾经在一道二叉树的动态规划题目中也遇到过。当求某些连续的元素时，可以考虑是否利用前缀的思想在有限次运算中得到。&lt;/p&gt;
+
+&lt;h2 id=&quot;3&quot;&gt;3. 总结&lt;/h2&gt;
+
+&lt;p&gt;​我之前学习了sedgewick老先生开设的算法课，那时候算法给我的感觉和现在完全是不同的，当时感觉，算法就是这样堂堂正正的、严谨苛刻的，课程中讲的都是十分经典的算法。但是自己刷题还有看刘汝佳这本书，才感觉到世界深深的恶意……算法给我的感觉是天马行空的，现实的问题是如此之多，有很多小巧精致的算法，或者说思想和技巧等待我去学习实践。&lt;/p&gt;
+
+&lt;p&gt;​ &lt;/p&gt;
+
+&lt;p&gt;​ &lt;/p&gt;
+
+&lt;p&gt;​ &lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Sponsor Search</title>
    <link href="http://agrowingtree.github.io/2016/03/02/Sponser-search/"/>
    <updated>2016-03-02T00:00:00+08:00</updated>
    <id>http://agrowingtree.github.io/2016/03/02/Sponser-search</id>
