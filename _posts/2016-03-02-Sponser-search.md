@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Sponsor Search
-comments: True
 ---
 
 * [INTRODUCTION](#INTRODUCTION)

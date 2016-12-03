@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
- <title>Huayang</title>
- <link href="http://agrowingtree.github.io/atom.xml" rel="self"/>
- <link href="http://agrowingtree.github.io/"/>
- <updated>2016-12-02T17:52:25+08:00</updated>
- <id>http://agrowingtree.github.io</id>
+ <title>Young</title>
+ <link href="http://localhost:4000/atom.xml" rel="self"/>
+ <link href="http://localhost:4000/"/>
+ <updated>2016-12-03T14:03:51+08:00</updated>
+ <id>http://localhost:4000</id>
  <author>
    <name>Huayang Li</name>
    <email>waajoenglei@gmail.com</email>
@@ -13,10 +13,287 @@
 
  
  <entry>
+   <title>Unix/Linux 文件和进程管理</title>
+   <link href="http://localhost:4000/2016/05/23/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+   <updated>2016-05-23T00:00:00+08:00</updated>
+   <id>http://localhost:4000/2016/05/23/Linux学习笔记</id>
+   <content type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#vim&quot;&gt;Vim&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86&quot;&gt;文件管理&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#chmod-%E5%91%BD%E4%BB%A4&quot;&gt;chmod 命令&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#chown%E5%92%8Cchgrp%E5%91%BD%E4%BB%A4&quot;&gt;chown和chgrp命令&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86&quot;&gt;进程管理&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%B1%9E%E6%80%A7&quot;&gt;进程的属性&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%91%BD%E4%BB%A4%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84&quot;&gt;命令是如何执行的&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%83%B5%E5%B0%B8zombie%E8%BF%9B%E7%A8%8B&quot;&gt;僵尸(zombie)进程&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%AD%A4%E7%AB%8B%E8%BF%9B%E7%A8%8B%E5%92%8C%E5%90%8E%E5%8F%B0%E9%A9%BB%E7%95%99%E8%BF%9B%E7%A8%8B&quot;&gt;孤立进程和后台驻留进程&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%89%8D%E5%8F%B0%E5%90%8E%E5%8F%B0%E8%BF%9B%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E5%88%87%E6%8D%A2&quot;&gt;前台后台进程之间的切换&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E4%BF%A1%E5%8F%B7&quot;&gt;信号&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;本文基于&lt;a href=&quot;https://www.tutorialspoint.com/unix/index.htm&quot;&gt;Learn Unix&lt;/a&gt;教程&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;vim&quot;&gt;1. Vim&lt;/h2&gt;
+
+&lt;p&gt;在开始主要内容之前，先来说一下Vim。Vim 是一款终端上的文本编辑器。我最初使用的是&lt;code&gt;Sublime Text&lt;/code&gt;，后来开始学习使用Vim，Vim的学习周期比较长，但是学习新东西上手最重要，上手以后觉得自己掌握的几个命令无法满足自己时自然会继续学习。对于初学者只需要掌握&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;hjkl&lt;/code&gt;进行移动&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;i&lt;/code&gt;进入插入模式，&lt;code&gt;esc&lt;/code&gt;进入普通模式&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;p&lt;/code&gt;粘贴，&lt;code&gt;v&lt;/code&gt;选中，&lt;code&gt;y&lt;/code&gt;复制&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;就可以开始Vim之旅了！&lt;/p&gt;
+
+&lt;p&gt;最近一个叫Neovim的东西出现，可以阅读这篇&lt;a href=&quot;http://geoff.greer.fm/2015/01/15/why-neovim-is-better-than-vim/&quot;&gt;Why Neovim is Better than Vim&lt;/a&gt;，Neovim最明显的体验就是没有了Vim卡顿的状况，但是现在还不支持&lt;code&gt;Lua&lt;/code&gt;，无法使用&lt;code&gt;Neocomplete&lt;/code&gt;插件。同学写了一份不错的Neovim配置&lt;a href=&quot;https://github.com/neo1218/MuxiVim&quot;&gt;MuxiVim&lt;/a&gt;，包含了必要的插件，快捷键映射也十分方便，果断抛弃&lt;code&gt;spf13&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;另外推荐一份非常清丽脱俗的博文&lt;a href=&quot;http://benmccormick.org/2014/07/02/learning-vim-in-2014-vim-as-language/&quot;&gt;Vim as Language&lt;/a&gt;来讲解命令之间的组合。&lt;/p&gt;
+
+&lt;h2 id=&quot;文件管理&quot;&gt;2. 文件管理&lt;/h2&gt;
+
+&lt;p&gt;Linux中的文件有三类:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;普通文件：保存数据，文本，程序指令的文件&lt;/li&gt;
+&lt;li&gt;目录：目录文件包含了普通文件和特殊文件&lt;/li&gt;
+&lt;li&gt;特殊文件：和硬件、调制解调器、适配器等交互的文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/Hello
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;ls -l
+total 16
+-rw-r--r--  1 Demon  staff   0 Dec  2 23:50 2.txt
+lrwxr-xr-x  1 Demon  staff   5 Dec  2 23:56 3.txt -&amp;gt; 1.txt
+drwxr-xr-x  2 Demon  staff  68 Dec  2 23:58 dir
+-rwxrwxrwx  1 Demon  staff   0 Dec  3 00:26 hello.cpp
+lrwxr-xr-x  1 Demon  staff   3 Dec  2 23:57 mydir -&amp;gt; dir
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;每一列的意思分别为:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;第一列：文件类型，之后是文件权限&lt;/li&gt;
+&lt;li&gt;第二列：该文件或者目录所占的存储块&lt;/li&gt;
+&lt;li&gt;第三列：文件的所有者(owner)&lt;/li&gt;
+&lt;li&gt;第四列：所有者的组(group)。每一个Unix用户都有一个相关联的组&lt;/li&gt;
+&lt;li&gt;第五列：表示有多少Bytes&lt;/li&gt;
+&lt;li&gt;第六列：文件或目录创建或者最近修改时间&lt;/li&gt;
+&lt;li&gt;第七列：文件或者目录名&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;看到第一列有字符&lt;code&gt;d&lt;/code&gt;或者&lt;code&gt;-&lt;/code&gt;，这些字符表示文件的类型，&lt;code&gt;d&lt;/code&gt;表示目录，&lt;code&gt;-&lt;/code&gt;表示普通文件，还有其他的文件类型如下所示:&lt;/p&gt;
+
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;前缀&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;b&lt;/td&gt;
+&lt;td&gt;block device，这种叫法是因为硬件一次读或写一个扇区块。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;c&lt;/td&gt;
+&lt;td&gt;Character device，这种叫法是因为每一个字符都被单独处理。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;l&lt;/td&gt;
+&lt;td&gt;符号链接文件。符号链接(软链接)任何正规文件(regular file)。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;p&lt;/td&gt;
+&lt;td&gt;Named pipe负责进程间通信，与pipe非常相似。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;s&lt;/td&gt;
+&lt;td&gt;Socket 负责进程间通信。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;关于文件前缀的更多详细信息请参考&lt;a href=&quot;https://en.wikipedia.org/wiki/Unix_file_types&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;之后的&lt;code&gt;rwx&lt;/code&gt;分别为 (&lt;strong&gt;r&lt;/strong&gt;)ead, (&lt;strong&gt;w&lt;/strong&gt;)rite, e(&lt;strong&gt;x&lt;/strong&gt;)ecute，如果某项权限不存在，则显示为&lt;code&gt;-&lt;/code&gt;。每三个一组，按顺序分别对应用户(user)，用户组(group)，还有其他(other)。读写权限很好理解，对于文件来说就是读和写文件内容，对于目录来说就是查看和写入目录。对于执行权限:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;普通文件：编译过后生成的可执行文件如果想要执行，必须有执行权限。&lt;/li&gt;
+&lt;li&gt;目录文件：&lt;code&gt;cd&lt;/code&gt;或者&lt;code&gt;ls&lt;/code&gt;等命令的执行需要目录有执行权限。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;chmod-命令&quot;&gt;chmod 命令&lt;/h3&gt;
+
+&lt;p&gt;文件的权限可以与二进制数对应，方便利用&lt;code&gt;chmod&lt;/code&gt;命令修改&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;rwx rwx rwx = 111 111 111
+rw- rw- rw- = 110 110 110
+rwx --- --- = 111 000 000
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;所以&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;rwx = 111 in binary = 7
+rw- = 110 in binary = 6
+r-x = 101 in binary = 5
+r-- = 100 in binary = 4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;如上面所展示的，文件2.txt的权限为&lt;code&gt;rw-r--r--&lt;/code&gt;, 我们将它修改为&lt;code&gt;rwxrwxrx&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;chmod 777 2.txt
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;ls -l 2.txt
+-rwxrwxrwx  1 Demon  staff  0 Dec  2 23:50 2.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;chown和chgrp命令&quot;&gt;chown和chgrp命令&lt;/h3&gt;
+
+&lt;p&gt;如果需要改变文件所有者或者组需要用&lt;code&gt;sudo&lt;/code&gt;得到权限&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo chown new_owner some_file
+Password:
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo chgrp new_group some_file
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;进程管理&quot;&gt;3. 进程管理&lt;/h2&gt;
+
+&lt;p&gt;一般情况下，需要等一个命令运行结束以后才能输入下一个命令(不讨论分屏和多窗口)，这些命令我们称为&lt;strong&gt;&lt;em&gt;前台进程&lt;/em&gt;&lt;/strong&gt; (Foreground Process)，之后会讲到&lt;strong&gt;&lt;em&gt;后台进程&lt;/em&gt;&lt;/strong&gt; (Background Process)。关于进程的概念，就不在这里太多讨论，不了解的同学可以参考&lt;a href=&quot;https://defrur.gitbooks.io/introduction-to-process/content/concept.html&quot;&gt;这里&lt;/a&gt;。关于UNIX进程，本文参考了这篇&lt;a href=&quot;http://www.brianstorti.com/an_introduction_to_unix_processes/&quot;&gt;文章&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;进程的属性&quot;&gt;3.1 进程的属性&lt;/h3&gt;
+
+&lt;p&gt;查看正在运行的进程可以用&lt;code&gt;ps&lt;/code&gt;(process status)命令&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;ps
+  PID TTY           TIME CMD
+30628 ttys000    0:00.08 /Applications/iTerm.app/Contents/MacOS/iTerm2 --server login -fp Demon
+30631 ttys000    0:00.49 -zsh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;也可以用&lt;code&gt;-o&lt;/code&gt;参数来选择输出信息，例如&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;ps -o pid,ppid,tty,uid,args
+  PID  PPID TTY        UID ARGS
+30628  3054 ttys000    501 /Applications/iTerm.app/Contents/MacOS/iTerm2 --server login -fp
+30631 30629 ttys000    501 -zsh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;PID&lt;/strong&gt; 是进程的标志码，唯一确定。PID是随机分配的，某一个PID可能和某个已经结束的进程的PID一样，但是一定是在当前所有进程中唯一的。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;PPID&lt;/strong&gt; 是父进程的ID，不严格的来说，每一个进程都会有一个父进程，子进程由父进程创建&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TTY&lt;/strong&gt; 该属性是对终端会话(terminal session)的标识，也就是进程被触发的终端。几乎所有进程都会有TTY属性，出了后台驻留的程序。可以使用&lt;code&gt;screen&lt;/code&gt;命令来创建新的会话，来感受一下，screen的用法请参考&lt;a href=&quot;https://github.com/chenzhiwei/linux/tree/master/screen&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;screen -S hello &lt;span class=&quot;c&quot;&gt;#ctrl+a+d可以挂起会话&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;detached]
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;ps 
+  PID TTY           TIME CMD
+30628 ttys000    0:00.08 /Applications/iTerm.app/Contents/MacOS/iTerm2 --server login -fp Demon
+30631 ttys000    0:00.52 -zsh
+32379 ttys001    0:00.19 zsh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;现在看到多了一个&lt;code&gt;ttys001&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;UID&lt;/strong&gt; 识别进程拥有者的用户ID，进程会根据UID这只权限。检查你的用户ID&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;id -u Demon
+501
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;ARGS&lt;/strong&gt; 是紧跟进程的参数&lt;/p&gt;
+
+&lt;p&gt;更多的&lt;code&gt;ps&lt;/code&gt;属性可以查文档&lt;/p&gt;
+
+&lt;h3 id=&quot;命令是如何执行的&quot;&gt;3.2 命令是如何执行的&lt;/h3&gt;
+
+&lt;p&gt;进程的产生于两个命令有关&lt;code&gt;fork&lt;/code&gt;和&lt;code&gt;exec&lt;/code&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;fork: 复制当前进程，是一个系统调用&lt;/li&gt;
+&lt;li&gt;exec: 取代复制的进程&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;以vim 创建的过程为例，当在终端输入&lt;code&gt;vim&lt;/code&gt;命令的时候，背后的实际操作是，&lt;code&gt;bash&lt;/code&gt;(我的是zsh)调用&lt;code&gt;fork&lt;/code&gt;将它自己拷贝。然后&lt;code&gt;exec&lt;/code&gt;将这个拷贝替换成&lt;code&gt;vim&lt;/code&gt;程序。这个vim进程的PPID就是被拷贝的进程，PID就是&lt;code&gt;vim&lt;/code&gt;程序的进程ID，如下所示，另外我使用的是neovim，所以显示的是nvim而不是vim。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;ps -o pid,ppid,tty,uid,args
+    PID  PPID TTY        UID ARGS
+30628  3054 ttys000    501 /Applications/iTerm.app/Contents/MacOS/iTerm2 --server login -fp
+30631 30629 ttys000    501 -zsh
+32794 30631 ttys000    501 nvim
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;如果我们直接执行，则&lt;code&gt;bash&lt;/code&gt;不进行拷贝&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;vim 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;vim程序会直接替代&lt;code&gt;bash&lt;/code&gt;进程，当退出vim的时候，终端窗口也就一起关闭了。&lt;/p&gt;
+
+&lt;h3 id=&quot;僵尸zombie进程&quot;&gt;3.3 僵尸(zombie)进程&lt;/h3&gt;
+
+&lt;p&gt;每一个进程结束都会返回一个结束码(exit code)，成功的进程返回0，如果有错则返回其他，之后进程会根据这个结束码抛错&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt;
+0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;nop
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt;:cd:13: no such file or directory: nop
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt;
+1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;父进程通过系统调用&lt;code&gt;wait&lt;/code&gt;读取该进程&lt;/p&gt;
+
+&lt;p&gt;一个进程成为僵尸进程，当它已经结束，但是父进程并没有调用&lt;code&gt;wait&lt;/code&gt;，这个进程还可以用&lt;code&gt;ps&lt;/code&gt;查看到，但是状态变为&lt;code&gt;z&lt;/code&gt;。所以这个程序并没有真正的退出，一直到父进程调用&lt;code&gt;wait&lt;/code&gt;之后才真的结束。&lt;/p&gt;
+
+&lt;h3 id=&quot;孤立进程和后台驻留进程&quot;&gt;3.4 孤立进程和后台驻留进程&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;孤立进程&lt;/strong&gt;    当一个进程还在，但是父进程结束的时候，初始进程(系统执行的第一个进程，通常是&lt;code&gt;init&lt;/code&gt;，在Mac OS是&lt;code&gt;lanunchd&lt;/code&gt;进程)会成为它的父进程，这些孤立进程的PPID是1。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;后台驻留进程&lt;/strong&gt;  后台驻留进程在后台运行，并且不依附于控制终端。后台驻留程序的父进程是&lt;code&gt;init&lt;/code&gt;，并且名字大多以&lt;code&gt;d&lt;/code&gt;结尾，如&lt;code&gt;syslogd&lt;/code&gt;, &lt;code&gt;sshd&lt;/code&gt;, &lt;code&gt;httpd&lt;/code&gt;。后台驻留程序可以是&lt;code&gt;init&lt;/code&gt;生成的，也可以是某个进程有意的成为孤立进程。&lt;/p&gt;
+
+&lt;h3 id=&quot;前台后台进程之间的切换&quot;&gt;3.5 前台后台进程之间的切换&lt;/h3&gt;
+
+&lt;p&gt;如何让一个进程在后台运行呢？&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;brew update &amp;amp;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;2] 33196
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;只需要在进程的末尾添加&lt;code&gt;&amp;amp;&lt;/code&gt;符号。&lt;code&gt;brew&lt;/code&gt;是Mac Os中的命令，类似于Ubuntu 的&lt;code&gt;apt-get&lt;/code&gt;。如上所示 ,&lt;code&gt;[2] 33196&lt;/code&gt;，其中&lt;code&gt;2&lt;/code&gt;是进程的作业号，&lt;code&gt;33196&lt;/code&gt;是进程的PID。我们可以用&lt;code&gt;jobs&lt;/code&gt;命令查看作业信息：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;jobs&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;1]  + suspended &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;tty output&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  nvim
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;2]    running    brew update
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;如果一个后台运行的进程需要输入的话，会自动转为&lt;code&gt;suspended&lt;/code&gt;状态并提醒用户，可以用&lt;code&gt;fg&lt;/code&gt;命令将其调到前台执行，完成输入以后如果想要再放到后台执行可以使用&lt;code&gt;Ctrl+z&lt;/code&gt;。&lt;code&gt;bg&lt;/code&gt;命令与&lt;code&gt;fg&lt;/code&gt;命令类似，但是是调到后台继续执行。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo ls -l &amp;amp;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;1] 34113
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;1]  + 34113 suspended &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;tty output&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  sudo ls -l
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;jobs&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;1]  + suspended &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;tty output&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  sudo ls -l
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;fg&lt;/span&gt; %1 &lt;span class=&quot;c&quot;&gt;#fg详情请查看文档&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;1]  + 34113 continued  sudo ls -l
+Password:
+total 16
+-rwxrwxrwx  1 Demon  staff   0 Dec  2 23:50 2.txt
+lrwxr-xr-x  1 Demon  staff   5 Dec  2 23:56 3.txt -&amp;gt; 1.txt
+drwxr-xr-x  2 Demon  staff  68 Dec  2 23:58 dir
+-rwxrwxrwx  1 Demon  staff   0 Dec  3 00:26 hello.cpp
+lrwxr-xr-x  1 Demon  staff   3 Dec  2 23:57 mydir -&amp;gt; dir
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;另外，如果想让进程即使关闭了终端依旧执行可以使用&lt;code&gt;nohup&lt;/code&gt;命令&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;nohup find -size +100k &amp;gt; log.txt &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这行命令 调用的find命令，查找超过100k的文件，并且将标准输出通过管道写到&lt;code&gt;log.txt&lt;/code&gt;文件，这个进程在后台执行，即使退出shell依旧执行。&lt;/p&gt;
+
+&lt;h3 id=&quot;信号&quot;&gt;3.6 信号&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;kill&lt;/code&gt;命令可以再进程之间发送信号，&lt;code&gt;kill&lt;/code&gt;并不是杀死进程，要杀死进程需要:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;kill&lt;/span&gt; -KILL 27267 
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;kill&lt;/span&gt; -SIGKILL 27267 
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;kill&lt;/span&gt; -9 27267 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;其中 &lt;code&gt;-KILL&lt;/code&gt;, &lt;code&gt;-SIGKILL&lt;/code&gt;, &lt;code&gt;-9&lt;/code&gt;等价，都是要传输的信号，&lt;code&gt;27267&lt;/code&gt;是进程PID。&lt;code&gt;kill&lt;/code&gt;可以传输的信号有很多&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;kill&lt;/span&gt; -l
+HUP INT QUIT ILL TRAP ABRT EMT FPE KILL BUS SEGV SYS PIPE ALRM TERM URG STOP TSTP CONT CHLD TTIN TTOU IO XCPU XFSZ VTALRM PROF WINCH INFO USR1 USR2
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;仔细数一下，&lt;code&gt;KILL&lt;/code&gt;正好是第九个 :)&lt;/p&gt;
+
+&lt;p&gt;当进程捕获信号以后，可以对该信号做出相应的处理，也可以忽略，这也是为什么&lt;code&gt;Ctrl+C&lt;/code&gt;(相当于发出一个中断信号)有时候不管用。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>算法笔记一</title>
-   <link href="http://agrowingtree.github.io/2016/04/06/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
+   <link href="http://localhost:4000/2016/04/06/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
    <updated>2016-04-06T00:00:00+08:00</updated>
-   <id>http://agrowingtree.github.io/2016/04/06/算法笔记</id>
+   <id>http://localhost:4000/2016/04/06/算法笔记</id>
    <content type="html">&lt;blockquote&gt;
 &lt;p&gt;本文基于刘汝佳的《算法竞赛入门经典训练指南》第一章，总结阅读第一章的收获&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -88,7 +365,7 @@
 
 &lt;p&gt;​Floyd判圈算法求环的起点，&lt;a href=&quot;https://www.quora.com/How-does-Floyds-cycle-finding-algorithm-work/answer/Atul-Yadav-2&quot;&gt;Quora上的回答&lt;/a&gt;非常精彩。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://github.com/hychn/hychn.github.io/img/floyd.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/hychn/hychn.github.io/blob/master/img/floyd.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;速度较慢的指针走过的距离为: $slowDistance = x+y$ &lt;/p&gt;
 
@@ -173,9 +450,9 @@ $$
  
  <entry>
    <title>Sponsor Search</title>
-   <link href="http://agrowingtree.github.io/2016/03/02/Sponser-search/"/>
+   <link href="http://localhost:4000/2016/03/02/Sponser-search/"/>
    <updated>2016-03-02T00:00:00+08:00</updated>
-   <id>http://agrowingtree.github.io/2016/03/02/Sponser-search</id>
+   <id>http://localhost:4000/2016/03/02/Sponser-search</id>
    <content type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#INTRODUCTION&quot;&gt;INTRODUCTION&lt;/a&gt;
 
