@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Sponsor Search
+title: Sponser Advertising
 categories: Computational-Advertising
 ---
 
-
-<h2 id="INTRODUCTION">INTRODUCTION</h2>
+INTRODUCTION
+============
 
 But for the SS, the web will be much more small. Once a user type the
 queries and browse on the search engines, the advertiser will bid for
@@ -22,47 +22,61 @@ because more than 80% of queries occur one time. The challenge of AM is
 queries re-writting, we’ll talk in section 2. For section 3, we’ll talk
 the problem remain to be solved in the new term.
 
-<h3 id="ImplementationApproaches">Implementation Approaches</h3>
+Implementation Approaches
+-------------------------
 
-####**The data base approach**(original Overture approach)
+1.  **The data base approach**(original Overture approach)
 
-- Ads are records in a data base
-- The bid phrase (BP) is an attribute
-- On query q, for EM consider all ads with BP=q
+    -   Ads are records in a data base
 
-####**The IR approach**(modern view)
+    -   The bid phrase (BP) is an attribute
 
-- Ads are documents in an ad corpus
-- The bid phrase is a meta-datum
-- On query q run q against the ad corpus
-    - Have a suitable ranking function (more later)
-    - BP = q (exact match) has high weight
-    - No distinction between AM and EM
+    -   On query q, for EM consider all ads with BP=q
 
-<h3 id="TheTwoPhasesOfAdSelection">The Two Phases Of Ad Selection</h3>
+2.  **The IR approach**(modern view)
 
-- Ad Retrieval: Consider the whole ad corpus and select a set of most
-viable candidates (e.g. 100)
+    -   Ads are documents in an ad corpus
 
-- Ad Reordering: Re-score the candidates using a more elaborate
-scoring function to produce the final ordering
+    -   The bid phrase is a meta-datum
 
-<h2 id="EXACT MATCH">EXACT MATCH</h2>
+    -   On query q run q against the ad corpus
+
+        -   Have a suitable ranking function (more later)
+
+        -   BP = q (exact match) has high weight
+
+        -   No distinction between AM and EM
+
+The two phases of ad selection
+------------------------------
+
+-   Ad Retrieval: Consider the whole ad corpus and select a set of most
+    viable candidates (e.g. 100)
+
+-   Ad Reordering: Re-score the candidates using a more elaborate
+    scoring function to produce the final ordering
+
+EXACT MATCH
+===========
 
 What’s EM?
 
-- queries = BP(bid phrase)
-- e.g. if the users query is “shoes”, then only the bid phrase “shoes”
+-   queries = BP(bid phrase)
+
+-   e.g. if the users query is “shoes”, then only the bid phrase “shoes”
     will match, the “sports shoes”, “shoe” or “shoees”… will fail
     to match.
-- this matching type will raise up the CTR but the volume will be low,
+
+-   this matching type will raise up the CTR but the volume will be low,
     in other words, it will reach less users.
 
-<h2 id="ADVANCED MATCH">ADVANCED MATCH</h2>
+ADVANCED MATCH
+==============
 
-<h3 id="QueryLogs">Query Rewriting Basing On Query Logs</h3>
+Query Rewriting Basing On Query Logs
+------------------------------------
 
-<h4 id="Definition Of Query Pair">Definition Of Query Pair</h4>
+### Definition of Query Pair
 
 The data used comes from logs of user web accesses. This data contains
 web searches annotated with user ID and timestamp. A *candidate
@@ -70,12 +84,14 @@ reformulation*is a pair of successive queries issued by a single user on
 a single day. Candidate reformulations will also be referred to as query
 pairs. 
 
-$$\begin{align}
-\text{candidate}&\text{Query}\text{Pairs}(user_{i},day_{i})=\\{\langle q_{1},q_{2} \rangle:(q_{1}\ne q_{2})\land \\\
-&\exists t: query_{t}(user_{i}, q_{1}) \land query_{t+1}(user_{i}, q_{2})\\}\end{align}
+$$
+\begin{align}
+\text{candidate}& \text{Query}\text{Pairs}(user_{i},day_{i}) =  \{ \langle q_{1},q_{2} \rangle:(q_{1}\ne q_{2})\land \\\
+&\exists t: query_{t}(user_{i}, q_{1}) \land query_{t+1}(user_{i}, q_{2}) \}
+\end{align}
 $$
 
-<h4 id="Phrase Substitutions">Phrase Substitutions</h3>
+### Phrase Substitutions
 
 The repeated searches for the same terms, as well as query pair
 sequences repeated by the same user on the same day. We then aggregate
@@ -87,7 +103,7 @@ segment queries into phrase for example “(new york) (maps)” or “(britney
 spears) (mp3s)”. where we set the threshold κ to be
 8$$\frac{P(\alpha, \beta)}{P(\alpha),P(\beta)} > \kappa$$
 
-<h4 id="Identifying Significant Query Pairs And Phrase Pairs">Identifying Significant Query Pairs And Phrase Pairs</h4>
+### Identifying Significant Query Pairs and Phrase Pairs
 
 In order to distinguish related query and phrase pairs from candidate
 pairs that are unrelated, we use the pair indepen- dence hypothesis
@@ -101,6 +117,8 @@ $$\begin{aligned}
 H_{2}:P(q_{2}|q_{1})=p_{1}&\ne p_{2}=P(q_{2}|\neg q_{1}) \end{aligned}
 $$
 
+
+
 The likelihood score is $$\lambda = \frac{L(H_{1})}{L(H_{2})}$$ The test
 statistic $-2 \log \lambda$ is asymptotically $\chi^{2}$ distributed.
 Therefore we work with the log likelihood ratio score:
@@ -110,7 +128,7 @@ dependence between term $q_1$ and term $q_2$. We refer to query pairs
 and phrase pairs above a threshold for the LLR score as
 *substitutables*.
 
-<h4 id="Generating Candidates">Generating Candidates</h4>
+### Generating Candidates
 
 We seek to generate statistically significant related queries for
 arbitrary input queries. For frequent queries, we may have many
@@ -138,10 +156,10 @@ infrequent queries.
 
 more information[^1]
 
-<h3 id="ClickData">Query Rewriting Basing On Click Data</h3>
+Query Rewriting Basing On Click Data
+------------------------------------
 
-
-<h4 id="Problem Definition">Problem Definition</h4>
+### Problem Definition
 
 -   We call the set of engine click set $\mathcal L$, which is
     consisted with tuples $\langle q, u, f_{qu} \rangle$. Where $u$
@@ -149,9 +167,9 @@ more information[^1]
     $f_{qu} $ is the number of times that the users issued query $q$ to
     the search engine and clicked on URL $u$. And
     $\mathcal Q\  \text{and}\ \mathcal U$ is the set if all
-    queries and all URLs.
+    queries and all URLs.\
     We will consider clock log $\mathcal L$ as a bipartite graph
-    $\mathcal G = (\mathcal Q,\mathcal U, \mathcal E)$, and
+    $\mathcal G = \mathcal Q,\mathcal U, E)$, and
     $(q, u)\in E \text{ with weight} f_{qu}$.
 
 -   And we define a *concepts* set
@@ -164,7 +182,7 @@ more information[^1]
     seed set $\mathcal S$ is consists of $\langle u, c\rangle$ pairs.
     We can regard this as label the URL with concept $c_{k}$.[^2]
 
-<h4 id="Absorbing Random Walk Algorithms">Absorbing Random Walk Algorithms</h4>
+### A Random Walk Algorithms
 
 Intuitively the queries (and URLs) are related to the concept of shoes
 because they are connected closely in the graph to the seed set that
@@ -208,8 +226,9 @@ recursively computed as:
 $$P(\ell_u = c) = (1-\alpha) \sum_{q:(u,q)\in E}w_{uq}P(\ell_{q} = c) \tag{2}$$
 where $$w_{uq} = \frac{f_{uq}}{\sum_{q:(u,q)\in E}f_{uq}}$$
 
+### Absorbing Random Walk Algorithm
 
-####**Algorithm 1** The ARW for single class:
+#### **Algorithm 1** The ARW for single class:
 
 >**Require**the seed set $\mathcal S$ for class $c$, the click-graph
 $\mathcal G$, the threshold parameter $\gamma$ , the transition
@@ -265,7 +284,7 @@ class $c_i$ to zero, thus making them into null absorbing nodes.
 $\mathcal G$, the threshold parameter $\gamma$ , the transition
 probability $\alpha$ to $\omega$
 
-####**Algorithm 2** The ARW for multiple class:
+#### **Algorithm 2** The ARW for multiple class:
 
 >**Require** the seed set $\mathcal S = \\{\mathcal S_{1},\dots,\mathcal S_{k}\\}$ for concepts $\mathcal C = \\{c_{1},\dots,c_{k}\\} $, the click-graph $\mathcal G$ the threshold parameter$\gamma $, the transition probability $\alpha$ to $\omega $
 
