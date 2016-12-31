@@ -53,6 +53,8 @@ pre code {
             user-select: none;
   }
 }
+// add scroll bar
+pre { white-space: pre; overflow: auto; }
 
 
 // Gist via GitHub Pages
