@@ -8,12 +8,10 @@ url:                 http://hychn.github.io
 paginate:            1
 baseurl:             ""
 
-pages_list:       
+pages_list:
   About: '/about'
-  Archive: '/Archive'
-#  Feed: '/atom.xml'
-# Assets
-#
+  Archive: '/archive'
+
 # We specify the directory for Jekyll so we can use @imports.
 sass:
   sass_dir:          _sass
@@ -35,15 +33,5 @@ gems:
   - jekyll-paginate
   - jekyll-gist
 
-
-# markdown: redcarpet
-# redcarpet:
-#     extensions: [with_toc_data]
-
-# markdown: redcarpet
-# redcarpet:
-#   extensions: [with_toc_data, autolink, no_intra_emphasis, strikethrough, tables]
-
 kramdown:
   input: GFM
-
