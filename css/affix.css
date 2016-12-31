@@ -1,9 +1,11 @@
 
 aside.col-md-3.hidden-print > div > ul > li > ul {
+    width: 263px;
     list-style-type: none;
 }
 
 aside.col-md-3.hidden-print > div > ul {
+    width: 263px;
     list-style-type: none;
 }
 aside.col-md-3.hidden-print {
