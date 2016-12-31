@@ -1,21 +1,9 @@
 ---
 layout: post
 title: Sponsor Search
+categories: Computational-Advertising
 ---
 
-* [INTRODUCTION](#INTRODUCTION)
-    * [Implementation Approaches](#Implementation Approaches)
-    * [The Two Phases Of Ad Selection](#The Two Phases Of Ad Selection)
-* [EXACT MATCH](#EXACT MATCH)
-* [ADVANCED MATCH](#ADVANCED MATCH)
-    * [Query Rewriting Basing On Query Logs](#Query Rewriting Basing On Query Logs)
-        * [Definition Of Query Pair](#Definition Of Query Pair)
-        * [Phrase Substitutions](#Phrase Substitutions)
-        * [Identifying Significant Query Pairs And Phrase Pairs](#Identifying Significant Query Pairs And Phrase Pairs)
-        * [Generating Candidates](#Generating Candidates)
-    * [Query Rewriting Basing On Click Data](#Query Rewriting Basing On Click Data)
-        * [Problem Definition](#Problem Definition)
-        * [Absorbing Random Walk Algorithms](#Absorbing Random Walk Algorithms)
 
 <h2 id="INTRODUCTION">INTRODUCTION</h2>
 
@@ -34,7 +22,7 @@ because more than 80% of queries occur one time. The challenge of AM is
 queries re-writting, we’ll talk in section 2. For section 3, we’ll talk
 the problem remain to be solved in the new term.
 
-<h3 id="Implementation Approaches">Implementation Approaches</h3>
+<h3 id="ImplementationApproaches">Implementation Approaches</h3>
 
 ####**The data base approach**(original Overture approach)
 
@@ -51,7 +39,7 @@ the problem remain to be solved in the new term.
     - BP = q (exact match) has high weight
     - No distinction between AM and EM
 
-<h3 id="The Two Phases Of Ad Selection">The Two Phases Of Ad Selection</h3>
+<h3 id="TheTwoPhasesOfAdSelection">The Two Phases Of Ad Selection</h3>
 
 - Ad Retrieval: Consider the whole ad corpus and select a set of most
 viable candidates (e.g. 100)
@@ -72,7 +60,7 @@ What’s EM?
 
 <h2 id="ADVANCED MATCH">ADVANCED MATCH</h2>
 
-<h3 id="Query Rewriting Basing On Query Logs">Query Rewriting Basing On Query Logs</h3>
+<h3 id="QueryLogs">Query Rewriting Basing On Query Logs</h3>
 
 <h4 id="Definition Of Query Pair">Definition Of Query Pair</h4>
 
@@ -150,10 +138,8 @@ infrequent queries.
 
 more information[^1]
 
-<h3 id="Query Rewriting Basing On Click Data">Query Rewriting Basing On Click Data</h3>
+<h3 id="ClickData">Query Rewriting Basing On Click Data</h3>
 
-Query Rewriting Basing On Click Data
-------------------------------------
 
 <h4 id="Problem Definition">Problem Definition</h4>
 

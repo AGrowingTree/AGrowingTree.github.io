@@ -1,23 +1,4 @@
 <head>
-  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    <!--TeX: { equationNumbers: { autoNumber: "AMS"} },-->
-    tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']],
-      processEnvironments: true,
-      processEscape: true,
-    },
-    'HTML-CSS': {
-      matchFontHeight: true,
-      availableFonts: [],
-      webFont: 'TeX'
-    }
-  });
-  </script>
-
-  <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,8 +10,14 @@
     {% endif %}
   </title>
 
+
+  
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="/css/affix.css">
   <link rel="stylesheet" href="{{ site.baseurl }}/styles.css">
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ site.baseurl }}/public/apple-touch-icon-precomposed.png">
   <link rel="shortcut icon" href="{{ site.baseurl }}/public/favicon.ico">
   <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ site.baseurl }}/atom.xml">
+
+
 </head>

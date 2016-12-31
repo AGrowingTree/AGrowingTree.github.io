@@ -1,10 +1,10 @@
 # Permalinks
-permalink:           pretty
+permalink:           /:categories/:title/
 
 # Setup
 title:               Young
 tagline:             'Machine Learning, Computational Advertising, Algorithms'
-url:                 http://agrowingtree.github.io
+url:                 http://hychn.github.io
 paginate:            1
 baseurl:             ""
 
@@ -35,10 +35,15 @@ gems:
   - jekyll-paginate
   - jekyll-gist
 
-markdown: redcarpet
+
+# markdown: redcarpet
+# redcarpet:
+#     extensions: [with_toc_data]
+
+# markdown: redcarpet
+# redcarpet:
+#   extensions: [with_toc_data, autolink, no_intra_emphasis, strikethrough, tables]
 
 kramdown:
   input: GFM
 
-redcarpet:
-  extensions: [autolink, no_intra_emphasis, strikethrough, tables, with_toc_data]

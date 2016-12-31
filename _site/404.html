@@ -2,25 +2,6 @@
 <html lang="en">
 
   <head>
-  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    <!--TeX: { equationNumbers: { autoNumber: "AMS"} },-->
-    tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']],
-      processEnvironments: true,
-      processEscape: true,
-    },
-    'HTML-CSS': {
-      matchFontHeight: true,
-      availableFonts: [],
-      webFont: 'TeX'
-    }
-  });
-  </script>
-
-  <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -30,14 +11,20 @@
     
   </title>
 
+
+  
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="/css/affix.css">
   <link rel="stylesheet" href="/styles.css">
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
   <link rel="shortcut icon" href="/public/favicon.ico">
   <link rel="alternate" type="application/atom+xml" title="Young" href="/atom.xml">
+
+
 </head>
 
 
-  <body>
+  <body data-spy="scroll" data-target="aside">
 
     <div class="container content">
       <header class="masthead">
@@ -54,6 +41,14 @@
         </h3>
       </header>
 
+      <aside class="col-md-3 hidden-print">
+        <div id="contents">
+          <ul class="nav">
+          </ul>
+        </div>
+      </aside>
+
+
       <main>
         <div class="page">
   <h1 class="page-title">404: Page not found</h1>
@@ -65,10 +60,17 @@
       <footer class="footer">
         <br />
         <small>
-          &copy; <time datetime="2016-12-16T22:16:23+08:00">2016</time>. All rights reserved.
+          &copy; <time datetime="2016-12-31T12:23:54+08:00">2016</time>. All rights reserved.
         </small>
       </footer>
     </div>
-    
-  </body>
+
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script src="/js/main.js"></script>
+
 </html>

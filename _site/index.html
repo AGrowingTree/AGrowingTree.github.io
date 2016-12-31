@@ -2,25 +2,6 @@
 <html lang="en">
 
   <head>
-  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    <!--TeX: { equationNumbers: { autoNumber: "AMS"} },-->
-    tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']],
-      processEnvironments: true,
-      processEscape: true,
-    },
-    'HTML-CSS': {
-      matchFontHeight: true,
-      availableFonts: [],
-      webFont: 'TeX'
-    }
-  });
-  </script>
-
-  <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -30,14 +11,20 @@
     
   </title>
 
+
+  
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="/css/affix.css">
   <link rel="stylesheet" href="/styles.css">
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
   <link rel="shortcut icon" href="/public/favicon.ico">
   <link rel="alternate" type="application/atom+xml" title="Young" href="/atom.xml">
+
+
 </head>
 
 
-  <body>
+  <body data-spy="scroll" data-target="aside">
 
     <div class="container content">
       <header class="masthead">
@@ -54,37 +41,27 @@
         </h3>
       </header>
 
+      <aside class="col-md-3 hidden-print">
+        <div id="contents">
+          <ul class="nav">
+          </ul>
+        </div>
+      </aside>
+
+
       <main>
         <div class="posts">
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/2016/10/13/%E5%9F%BA%E7%A1%80%E5%AF%B9%E5%81%B6%E5%8E%9F%E7%90%86/">
+      <a href="/convex-optimization/%E5%9F%BA%E7%A1%80%E5%AF%B9%E5%81%B6%E5%8E%9F%E7%90%86/">
         对偶基本原理
       </a>
     </h1>
 
     <time datetime="2016-10-13T00:00:00+08:00" class="post-date">13 Oct 2016</time>
 
-    <!-- * [基本问题](#基本问题)
-* [Lagrange对偶函数](#Lagrange对偶函数)
-    * [Lagrange函数](#Lagrange函数)
-    * [Lagrange对偶函数](#Lagrange对偶函数)
-    * [对偶函数的意义](#对偶函数的意义)
-* [对偶问题和弱对偶性](#对偶问题和弱对偶性)
-    * [对偶问题](#对偶问题)
-    * [弱对偶性](#弱对偶性)
-* [强对偶性](#强对偶性)
-    * [强对偶性](#强对偶性)
-    * [Slater约束准则](#Slater约束准则)
-* [最优性条件](#最优性条件)
-    * [次优解认证和终止准则](#次优解认证和终止准则)
-    * [互补松弛](#互补松弛)
-    * [KKT条件](#KKT条件)
-        * [非凸问题的KKT条件](#非凸问题的KKT条件)
-        * [凸问题的KKT条件](#凸问题的KKT条件) -->
-
-<h2>基本问题</h2>
+    <h2 id="1"> 基本问题 </h2>
 
 <p>$$
 \begin{equation}
@@ -99,11 +76,11 @@
 $$
 并且最优值为$p^* $, 对应的最优解为$x^* $。注意到，我们并没有在这里要求该问题是凸优化问题</p>
 
-<h2>Lagrange对偶函数</h2>
+<h2 id="2"> 对偶函数 </h2>
 
-<h3>Lagrange函数</h3>
+<h3 id="3"> Lagrange函数 </h3>
 
-<p>首先介绍<strong>Lagrange函数</strong>，其基本思想是在目标函数中考虑基本问题中的约束条件，添加约束条件的加权和得到增广目标函数:
+<p>首先介绍<strong>Lagrange 函数</strong>，其基本思想是在目标函数中考虑基本问题中的约束条件，添加约束条件的加权和得到增广目标函数:
 $$
 L(x,\lambda,\nu)=f_0(x)+\sum^m_{i=1}\lambda_if_i(x)+\sum^p_{i=1}\nu_ih_i(x),
 $$
@@ -115,7 +92,7 @@ $$
 
 <p><img src="https://raw.githubusercontent.com/hychn/hychn.github.io/master/img/LagrangeFunction.png" alt=""></p>
 
-<h3>Lagrange对偶函数</h3>
+<h3 id="4"> Lagrange对偶函数 </h3>  
 
 <p>定义<strong>Lagrange对偶函数</strong>(<strong>对偶函数</strong>)为关于Lagrange函数的逐点下确界，即Lagrange函数在$x$点处的最小值：
 $$
@@ -125,7 +102,7 @@ $$
 
 <p><img src="https://raw.githubusercontent.com/hychn/hychn.github.io/master/img/dualFunction.png" alt=""></p>
 
-<h3>对偶函数的意义</h3>
+<h3 id=">对偶函数的意义</h3>
 
 <p>对偶函数有两种重要意义:</p>
 
@@ -155,10 +132,11 @@ $$
 另外，我们只关心$g(\lambda, \nu)&gt;-\infty$的情况，此时对偶函数给出$p^* $的非平凡下界。称满足$\lambda\succeq 0$且$(\lambda, \nu) \in \boldsymbol{dom}\ g$ 的$(\lambda. \nu)$为<strong>对偶可行</strong>的。
 $$
 \boldsymbol{dom}\ g={(\lambda, \nu)| g(\lambda, \nu)&gt;-\infty }
-$$
-<h2>对偶问题和弱对偶性</h2></p>
+$$</p>
 
-<h3>对偶问题</h3>
+<h2 id="5"> 对偶问题和弱对偶性 </h2>
+
+<h3 id=">对偶问题</h3>
 
 <p>Lagrange对偶函数给出了$p^* $的下界，一个很自然的想法是，<strong>最好下界</strong>是什么。
 $$
@@ -169,7 +147,7 @@ $$
 $$
 上述问题成为<strong>对偶问题</strong> 。上文提到的一组<strong>对偶可行</strong>的$(\lambda, \nu) $为对偶问题的可行解。且有$(\lambda^* , \nu^* )$ 为对 <strong>偶最优解</strong>或<strong>最优Lagrange对偶乘子</strong>。对偶问题的最优值为$d^*$。</p>
 
-<h3>弱对偶性</h3>
+<h3 id="6"> 弱对偶性 </h3>
 
 <p>$d^* $为对偶问题的最好下界，并且有一个非常重要的不等式
 $$
@@ -184,9 +162,7 @@ $$
 
 <p>定义差值$p^* -d^* $为<strong>最优对偶间隙</strong>，由不等式$d^* \leq p^* $知 最优对偶间隙非负。当原问题不好求解的时候，根据弱对偶性可以给出原问题最优值的一个下界。一个问题如果是凸的，一般就认为是可以有效解决的。</p>
 
-<h2>强对偶性</h2>
-
-<h3>强对偶性</h3>
+<h2 id="7"> 强对偶性 </h2>
 
 <p>如果
 $$
@@ -208,7 +184,7 @@ $$
 $$
 其中$f_0\dots f_m$是凸函数，强对偶性通常成立(但是不总是)成立。有许多研究给出了凸性之外的强对偶性成立的条件。这些条件称为<strong>约束准则</strong></p>
 
-<h3>Slater约束准则</h3>
+<h3 id="slater">Slater约束准则</h3>
 
 <p>一个简单的约束条件是<strong>Slater条件</strong>: 存在$x\in \boldsymbol{relint}\ \mathcal{D}$ ($x$在定义域的相对内部)使得下式成立:
 $$
@@ -229,9 +205,9 @@ Ax=b
 $$
 也就是说仿射函数不需要严格成立。</p>
 
-<h2>最优性条件</h2>
+<h2 id="9"> 最优性条件 </h2>   
 
-<h3>次优解认证和终止准则</h3>
+<h3 id="10"> 次优解认证和终止准则 </h3>
 
 <p>对偶可行点可以让我们在不知道$p^* $的确切值的情况下界定给定点的次优程度。如果$\widetilde{x}$是原问题的可行解且$(\lambda,\nu)$是对偶可行解：
 $$
@@ -253,7 +229,7 @@ f_0(x^{(k)})-g(\lambda^{(k)}, \nu^{(k)})\leq\epsilon_{abs}
 $$
 保证算法终止的时候$x^{(k)}$是$\epsilon_{abs}$-次优的(只有当强对偶性质成立时对<strong>任意</strong>$\epsilon_{abs}&gt;0$都成立。)</p>
 
-<h3>互补松弛</h3>
+<h3 id="11"> 互补松弛 </h3> 
 
 <p>设强对偶性成立时，令$x^* $和$(\lambda^* , \nu^* )$为原问题最优解和对偶问题最优解，则有:
 $$
@@ -293,9 +269,9 @@ f_i(x^* )&lt;0\Longrightarrow\lambda_i^* &amp;=0
 $$
 上式意味着在最优点处，除了第 i 个约束起作用的情况(也就是取等号)，最优 Lagrange 乘子的第 $i$ 项都为零</p>
 
-<h3>KKT条件</h3>
+<h3 id="12"> KKT条件 </h3>
 
-<h4>非凸问题的KKT条件</h4>
+<h4 id="kkt">非凸问题的KKT条件</h4>
 
 <p>假设强对偶成立且$x^* $和$(\lambda^* , \nu^* )$分别为原问题和对偶问题的最优解，$f_i(x), h_j(x), i=0,\dots m, j=1,\dots ,p$可微。因为$L(x, \lambda^* , \nu^* )$(凸函数)关于$x$求极小在$x^* $处取得最小值，因此Lagrange函数在$x^* $处的导数为零，因此有
 $$
@@ -311,7 +287,7 @@ $$
 $$
 我们称上式为 <strong>Karush-Kuhn-Tucker</strong> (KKT) 条件</p>
 
-<h4>凸问题的KKT条件</h4>
+<h4 id="kkt">凸问题的KKT条件</h4>
 
 <p>如果函数$f_i(x)$是凸函数，$h_i(x)$是仿射函数，$\widetilde{x}, (\widetilde{\lambda}, \widetilde{\nu})$ 分别为原问题和对偶问题的可行解，且满足KKT条件:</p>
 
@@ -325,7 +301,7 @@ h_i(\widetilde{x}) = 0 &amp; i=1,\dots,p \\
 $$</p>
 
 <p>$$
- \nabla f_0(\widetilde{x})+ +\sum^m_{i=1} \widetilde{\lambda} \nabla f_i(\widetilde{x})+\sum^p_{i=1}\widetilde{\nu}_i \nabla h_i(\widetilde{x})=0
+ \nabla f_0(\widetilde{x})+ +\sum^m_{i=1} \widetilde{\lambda}_i \nabla f_i(\widetilde{x})+\sum^p_{i=1}\widetilde{\nu}_i \nabla h_i(\widetilde{x})=0
  $$</p>
 
 <p>则$\widetilde{x}, (\widetilde{\lambda}, \widetilde{\nu})$ 分别为原问题和对偶问题的最优解，对偶间隙为 0.</p>
@@ -348,10 +324,17 @@ $$</p>
       <footer class="footer">
         <br />
         <small>
-          &copy; <time datetime="2016-12-16T22:16:23+08:00">2016</time>. All rights reserved.
+          &copy; <time datetime="2016-12-31T12:23:54+08:00">2016</time>. All rights reserved.
         </small>
       </footer>
     </div>
-    
-  </body>
+
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script src="/js/main.js"></script>
+
 </html>

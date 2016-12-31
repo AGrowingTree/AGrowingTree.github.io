@@ -3,7 +3,7 @@
 
   {% include head.html %}
 
-  <body>
+  <body data-spy="scroll" data-target="aside">
 
     <div class="container content">
       <header class="masthead">
@@ -17,6 +17,14 @@
         </h3>
       </header>
 
+      <aside class="col-md-3 hidden-print">
+        <div id="contents">
+          <ul class="nav">
+          </ul>
+        </div>
+      </aside>
+
+
       <main>
         {{ content }}
       </main>
@@ -28,6 +36,6 @@
         </small>
       </footer>
     </div>
-    
-  </body>
+
+    {% include foot.html %}
 </html>

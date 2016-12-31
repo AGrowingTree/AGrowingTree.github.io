@@ -2,25 +2,6 @@
 <html lang="en">
 
   <head>
-  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    <!--TeX: { equationNumbers: { autoNumber: "AMS"} },-->
-    tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']],
-      processEnvironments: true,
-      processEscape: true,
-    },
-    'HTML-CSS': {
-      matchFontHeight: true,
-      availableFonts: [],
-      webFont: 'TeX'
-    }
-  });
-  </script>
-
-  <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -30,14 +11,20 @@
     
   </title>
 
+
+  
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="/css/affix.css">
   <link rel="stylesheet" href="/styles.css">
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
   <link rel="shortcut icon" href="/public/favicon.ico">
   <link rel="alternate" type="application/atom+xml" title="Young" href="/atom.xml">
+
+
 </head>
 
 
-  <body>
+  <body data-spy="scroll" data-target="aside">
 
     <div class="container content">
       <header class="masthead">
@@ -54,10 +41,20 @@
         </h3>
       </header>
 
+      <aside class="col-md-3 hidden-print">
+        <div id="contents">
+          <ul class="nav">
+          </ul>
+        </div>
+      </aside>
+
+
       <main>
         <article class="post">
+  <div>
   <h1 class="post-title">算法笔记一</h1>
   <time datetime="2016-04-06T00:00:00+08:00" class="post-date">06 Apr 2016</time>
+  </div>
   <blockquote>
 <p>本文基于刘汝佳的《算法竞赛入门经典训练指南》第一章，总结阅读第一章的收获</p>
 </blockquote>
@@ -123,7 +120,7 @@
     <span class="n">cycleStart</span> <span class="o">=</span> <span class="n">n1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<h4 id=">证明</h4>
+<h4>证明</h4>
 
 <p>对于Floyd判圈算法判断环是否存在的证明很容易想到，如果有环，另个速度不同的指针陷入无限循环中一定会相遇，若速度快的指针可以到达末端则不存在环。求环的长度同样很简单。</p>
 
@@ -135,16 +132,18 @@
 
 <p>速度较快的指针走过的距离为: $fastDistance= x+y+z+y $</p>
 
-<p>​ 另外我们知道快指针的速度是慢指针的两倍，所以在相同的时间内，$fastDistance = 2 \times slowDistance$， 所以我们可以推出:
-$$
+<p>​ 另外我们知道快指针的速度是慢指针的两倍，所以在相同的时间内，$fastDistance = 2 \times slowDistance$， 所以我们可以推出:</p>
+
+<p>$$
 \begin{align}
 2(x+y)&amp; = x+y+z+y\\
 x &amp;=z
 \end{align}
-$$
-​记住之前指针环绕圈的方向是顺时针（逆时针同理，但是两个指针的方向必须是一样的），把其中一个指针的位置重置到首端（假设为p1），两个指针都以速度$1$移动。因为$x = z$，当p1运动距离$x$，p2运动$z$，两个指针恰好相遇到环的起点。</p>
+$$</p>
 
-<h4 id=">使用范围</h4>
+<p>​记住之前指针环绕圈的方向是顺时针（逆时针同理，但是两个指针的方向必须是一样的），把其中一个指针的位置重置到首端（假设为p1），两个指针都以速度$1$移动。因为$x = z$，当p1运动距离$x$，p2运动$z$，两个指针恰好相遇到环的起点。</p>
+
+<h4>使用范围</h4>
 
 <blockquote>
 <p>此部分是个人想法，欢迎指正</p>
@@ -209,7 +208,8 @@ $$
 <p>​ </p>
 
 <p>​ </p>
-
+ 
+  <div>
   
 
   There are no comments on this post.
@@ -236,6 +236,7 @@ $$
 
 
 
+  </div>
 </article>
 
 
@@ -244,21 +245,21 @@ $$
   <ul class="related-posts">
     
       <li>
-        <a href="/2016/10/13/%E5%9F%BA%E7%A1%80%E5%AF%B9%E5%81%B6%E5%8E%9F%E7%90%86/">
+        <a href="/convex-optimization/%E5%9F%BA%E7%A1%80%E5%AF%B9%E5%81%B6%E5%8E%9F%E7%90%86/">
           对偶基本原理
           <small><time datetime="2016-10-13T00:00:00+08:00">13 Oct 2016</time></small>
         </a>
       </li>
     
       <li>
-        <a href="/2016/05/23/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        <a href="/command-line/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
           Unix/Linux 文件和进程管理
           <small><time datetime="2016-05-23T00:00:00+08:00">23 May 2016</time></small>
         </a>
       </li>
     
       <li>
-        <a href="/2016/03/02/Sponser-search/">
+        <a href="/computational-advertising/Sponser-search/">
           Sponsor Search
           <small><time datetime="2016-03-02T00:00:00+08:00">02 Mar 2016</time></small>
         </a>
@@ -273,10 +274,17 @@ $$
       <footer class="footer">
         <br />
         <small>
-          &copy; <time datetime="2016-12-16T22:16:23+08:00">2016</time>. All rights reserved.
+          &copy; <time datetime="2016-12-31T12:23:54+08:00">2016</time>. All rights reserved.
         </small>
       </footer>
     </div>
-    
-  </body>
+
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script src="/js/main.js"></script>
+
 </html>

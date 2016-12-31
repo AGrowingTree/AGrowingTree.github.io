@@ -3,10 +3,11 @@
 // Styles for managing the structural hierarchy of the site.
 
 .container {
+  position: relative;
   max-width: 38rem;
   padding-left:  1.5rem;
   padding-right: 1.5rem;
-  margin-left:  auto;
+  margin-left:  23rem;
   margin-right: auto;
 }
 

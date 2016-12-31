@@ -2,25 +2,6 @@
 <html lang="en">
 
   <head>
-  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    <!--TeX: { equationNumbers: { autoNumber: "AMS"} },-->
-    tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']],
-      processEnvironments: true,
-      processEscape: true,
-    },
-    'HTML-CSS': {
-      matchFontHeight: true,
-      availableFonts: [],
-      webFont: 'TeX'
-    }
-  });
-  </script>
-
-  <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -30,14 +11,20 @@
     
   </title>
 
+
+  
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="/css/affix.css">
   <link rel="stylesheet" href="/styles.css">
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
   <link rel="shortcut icon" href="/public/favicon.ico">
   <link rel="alternate" type="application/atom+xml" title="Young" href="/atom.xml">
+
+
 </head>
 
 
-  <body>
+  <body data-spy="scroll" data-target="aside">
 
     <div class="container content">
       <header class="masthead">
@@ -54,47 +41,27 @@
         </h3>
       </header>
 
+      <aside class="col-md-3 hidden-print">
+        <div id="contents">
+          <ul class="nav">
+          </ul>
+        </div>
+      </aside>
+
+
       <main>
         <div class="posts">
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/2016/03/02/Sponser-search/">
+      <a href="/computational-advertising/Sponser-search/">
         Sponsor Search
       </a>
     </h1>
 
     <time datetime="2016-03-02T00:00:00+08:00" class="post-date">02 Mar 2016</time>
 
-    <ul>
-<li><a href="#INTRODUCTION">INTRODUCTION</a>
-
-<ul>
-<li><a href="#Implementation%20Approaches">Implementation Approaches</a></li>
-<li><a href="#The%20Two%20Phases%20Of%20Ad%20Selection">The Two Phases Of Ad Selection</a></li>
-</ul></li>
-<li><a href="#EXACT%20MATCH">EXACT MATCH</a></li>
-<li><a href="#ADVANCED%20MATCH">ADVANCED MATCH</a>
-
-<ul>
-<li><a href="#Query%20Rewriting%20Basing%20On%20Query%20Logs">Query Rewriting Basing On Query Logs</a>
-
-<ul>
-<li><a href="#Definition%20Of%20Query%20Pair">Definition Of Query Pair</a></li>
-<li><a href="#Phrase%20Substitutions">Phrase Substitutions</a></li>
-<li><a href="#Identifying%20Significant%20Query%20Pairs%20And%20Phrase%20Pairs">Identifying Significant Query Pairs And Phrase Pairs</a></li>
-<li><a href="#Generating%20Candidates">Generating Candidates</a></li>
-</ul></li>
-<li><a href="#Query%20Rewriting%20Basing%20On%20Click%20Data">Query Rewriting Basing On Click Data</a>
-
-<ul>
-<li><a href="#Problem%20Definition">Problem Definition</a></li>
-<li><a href="#Absorbing%20Random%20Walk%20Algorithms">Absorbing Random Walk Algorithms</a></li>
-</ul></li>
-</ul></li>
-</ul>
-
-<h2 id="INTRODUCTION">INTRODUCTION</h2>
+    <h2 id="INTRODUCTION">INTRODUCTION</h2>
 
 <p>But for the SS, the web will be much more small. Once a user type the
 queries and browse on the search engines, the advertiser will bid for
@@ -111,7 +78,7 @@ because more than 80% of queries occur one time. The challenge of AM is
 queries re-writting, we’ll talk in section 2. For section 3, we’ll talk
 the problem remain to be solved in the new term.</p>
 
-<h3 id="Implementation Approaches">Implementation Approaches</h3>
+<h3 id="ImplementationApproaches">Implementation Approaches</h3>
 
 <h4 id="the-data-base-approach-original-overture-approach"><strong>The data base approach</strong>(original Overture approach)</h4>
 
@@ -135,7 +102,7 @@ the problem remain to be solved in the new term.</p>
 </ul></li>
 </ul>
 
-<h3 id="The Two Phases Of Ad Selection">The Two Phases Of Ad Selection</h3>
+<h3 id="TheTwoPhasesOfAdSelection">The Two Phases Of Ad Selection</h3>
 
 <ul>
 <li><p>Ad Retrieval: Consider the whole ad corpus and select a set of most
@@ -159,7 +126,7 @@ in other words, it will reach less users.</li>
 
 <h2 id="ADVANCED MATCH">ADVANCED MATCH</h2>
 
-<h3 id="Query Rewriting Basing On Query Logs">Query Rewriting Basing On Query Logs</h3>
+<h3 id="QueryLogs">Query Rewriting Basing On Query Logs</h3>
 
 <h4 id="Definition Of Query Pair">Definition Of Query Pair</h4>
 
@@ -238,9 +205,7 @@ new phrases: $q_i \mapsto p_1\dots p_j^{\prime}\dots p_n$</li>
 
 <p>more information[^1]</p>
 
-<h3 id="Query Rewriting Basing On Click Data">Query Rewriting Basing On Click Data</h3>
-
-<h2 id="query-rewriting-basing-on-click-data">Query Rewriting Basing On Click Data</h2>
+<h3 id="ClickData">Query Rewriting Basing On Click Data</h3>
 
 <h4 id="Problem Definition">Problem Definition</h4>
 
@@ -473,10 +438,17 @@ probability $\alpha$ to $\omega$</p>
       <footer class="footer">
         <br />
         <small>
-          &copy; <time datetime="2016-12-16T22:16:23+08:00">2016</time>. All rights reserved.
+          &copy; <time datetime="2016-12-31T12:23:54+08:00">2016</time>. All rights reserved.
         </small>
       </footer>
     </div>
-    
-  </body>
+
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script src="/js/main.js"></script>
+
 </html>

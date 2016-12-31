@@ -4,7 +4,7 @@
  <title>Young</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2016-12-16T22:16:23+08:00</updated>
+ <updated>2016-12-31T12:23:54+08:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Huayang Li</name>
@@ -14,28 +14,10 @@
  
  <entry>
    <title>对偶基本原理</title>
-   <link href="http://localhost:4000/2016/10/13/%E5%9F%BA%E7%A1%80%E5%AF%B9%E5%81%B6%E5%8E%9F%E7%90%86/"/>
+   <link href="http://localhost:4000/convex-optimization/%E5%9F%BA%E7%A1%80%E5%AF%B9%E5%81%B6%E5%8E%9F%E7%90%86/"/>
    <updated>2016-10-13T00:00:00+08:00</updated>
-   <id>http://localhost:4000/2016/10/13/基础对偶原理</id>
-   <content type="html">&lt;!-- * [基本问题](#基本问题)
-* [Lagrange对偶函数](#Lagrange对偶函数)
-    * [Lagrange函数](#Lagrange函数)
-    * [Lagrange对偶函数](#Lagrange对偶函数)
-    * [对偶函数的意义](#对偶函数的意义)
-* [对偶问题和弱对偶性](#对偶问题和弱对偶性)
-    * [对偶问题](#对偶问题)
-    * [弱对偶性](#弱对偶性)
-* [强对偶性](#强对偶性)
-    * [强对偶性](#强对偶性)
-    * [Slater约束准则](#Slater约束准则)
-* [最优性条件](#最优性条件)
-    * [次优解认证和终止准则](#次优解认证和终止准则)
-    * [互补松弛](#互补松弛)
-    * [KKT条件](#KKT条件)
-        * [非凸问题的KKT条件](#非凸问题的KKT条件)
-        * [凸问题的KKT条件](#凸问题的KKT条件) --&gt;
-
-&lt;h2&gt;基本问题&lt;/h2&gt;
+   <id>http://localhost:4000/convex-optimization/基础对偶原理</id>
+   <content type="html">&lt;h2 id=&quot;1&quot;&gt; 基本问题 &lt;/h2&gt;
 
 &lt;p&gt;$$
 \begin{equation}
@@ -50,11 +32,11 @@
 $$
 并且最优值为$p^* $, 对应的最优解为$x^* $。注意到，我们并没有在这里要求该问题是凸优化问题&lt;/p&gt;
 
-&lt;h2&gt;Lagrange对偶函数&lt;/h2&gt;
+&lt;h2 id=&quot;2&quot;&gt; 对偶函数 &lt;/h2&gt;
 
-&lt;h3&gt;Lagrange函数&lt;/h3&gt;
+&lt;h3 id=&quot;3&quot;&gt; Lagrange函数 &lt;/h3&gt;
 
-&lt;p&gt;首先介绍&lt;strong&gt;Lagrange函数&lt;/strong&gt;，其基本思想是在目标函数中考虑基本问题中的约束条件，添加约束条件的加权和得到增广目标函数:
+&lt;p&gt;首先介绍&lt;strong&gt;Lagrange 函数&lt;/strong&gt;，其基本思想是在目标函数中考虑基本问题中的约束条件，添加约束条件的加权和得到增广目标函数:
 $$
 L(x,\lambda,\nu)=f_0(x)+\sum^m_{i=1}\lambda_if_i(x)+\sum^p_{i=1}\nu_ih_i(x),
 $$
@@ -66,7 +48,7 @@ $$
 
 &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/hychn/hychn.github.io/master/img/LagrangeFunction.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
-&lt;h3&gt;Lagrange对偶函数&lt;/h3&gt;
+&lt;h3 id=&quot;4&quot;&gt; Lagrange对偶函数 &lt;/h3&gt;  
 
 &lt;p&gt;定义&lt;strong&gt;Lagrange对偶函数&lt;/strong&gt;(&lt;strong&gt;对偶函数&lt;/strong&gt;)为关于Lagrange函数的逐点下确界，即Lagrange函数在$x$点处的最小值：
 $$
@@ -76,7 +58,7 @@ $$
 
 &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/hychn/hychn.github.io/master/img/dualFunction.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
-&lt;h3&gt;对偶函数的意义&lt;/h3&gt;
+&lt;h3 id=&quot;&gt;对偶函数的意义&lt;/h3&gt;
 
 &lt;p&gt;对偶函数有两种重要意义:&lt;/p&gt;
 
@@ -106,10 +88,11 @@ $$
 另外，我们只关心$g(\lambda, \nu)&amp;gt;-\infty$的情况，此时对偶函数给出$p^* $的非平凡下界。称满足$\lambda\succeq 0$且$(\lambda, \nu) \in \boldsymbol{dom}\ g$ 的$(\lambda. \nu)$为&lt;strong&gt;对偶可行&lt;/strong&gt;的。
 $$
 \boldsymbol{dom}\ g={(\lambda, \nu)| g(\lambda, \nu)&amp;gt;-\infty }
-$$
-&lt;h2&gt;对偶问题和弱对偶性&lt;/h2&gt;&lt;/p&gt;
+$$&lt;/p&gt;
 
-&lt;h3&gt;对偶问题&lt;/h3&gt;
+&lt;h2 id=&quot;5&quot;&gt; 对偶问题和弱对偶性 &lt;/h2&gt;
+
+&lt;h3 id=&quot;&gt;对偶问题&lt;/h3&gt;
 
 &lt;p&gt;Lagrange对偶函数给出了$p^* $的下界，一个很自然的想法是，&lt;strong&gt;最好下界&lt;/strong&gt;是什么。
 $$
@@ -120,7 +103,7 @@ $$
 $$
 上述问题成为&lt;strong&gt;对偶问题&lt;/strong&gt; 。上文提到的一组&lt;strong&gt;对偶可行&lt;/strong&gt;的$(\lambda, \nu) $为对偶问题的可行解。且有$(\lambda^* , \nu^* )$ 为对 &lt;strong&gt;偶最优解&lt;/strong&gt;或&lt;strong&gt;最优Lagrange对偶乘子&lt;/strong&gt;。对偶问题的最优值为$d^*$。&lt;/p&gt;
 
-&lt;h3&gt;弱对偶性&lt;/h3&gt;
+&lt;h3 id=&quot;6&quot;&gt; 弱对偶性 &lt;/h3&gt;
 
 &lt;p&gt;$d^* $为对偶问题的最好下界，并且有一个非常重要的不等式
 $$
@@ -135,9 +118,7 @@ $$
 
 &lt;p&gt;定义差值$p^* -d^* $为&lt;strong&gt;最优对偶间隙&lt;/strong&gt;，由不等式$d^* \leq p^* $知 最优对偶间隙非负。当原问题不好求解的时候，根据弱对偶性可以给出原问题最优值的一个下界。一个问题如果是凸的，一般就认为是可以有效解决的。&lt;/p&gt;
 
-&lt;h2&gt;强对偶性&lt;/h2&gt;
-
-&lt;h3&gt;强对偶性&lt;/h3&gt;
+&lt;h2 id=&quot;7&quot;&gt; 强对偶性 &lt;/h2&gt;
 
 &lt;p&gt;如果
 $$
@@ -159,7 +140,7 @@ $$
 $$
 其中$f_0\dots f_m$是凸函数，强对偶性通常成立(但是不总是)成立。有许多研究给出了凸性之外的强对偶性成立的条件。这些条件称为&lt;strong&gt;约束准则&lt;/strong&gt;&lt;/p&gt;
 
-&lt;h3&gt;Slater约束准则&lt;/h3&gt;
+&lt;h3 id=&quot;slater&quot;&gt;Slater约束准则&lt;/h3&gt;
 
 &lt;p&gt;一个简单的约束条件是&lt;strong&gt;Slater条件&lt;/strong&gt;: 存在$x\in \boldsymbol{relint}\ \mathcal{D}$ ($x$在定义域的相对内部)使得下式成立:
 $$
@@ -180,9 +161,9 @@ Ax=b
 $$
 也就是说仿射函数不需要严格成立。&lt;/p&gt;
 
-&lt;h2&gt;最优性条件&lt;/h2&gt;
+&lt;h2 id=&quot;9&quot;&gt; 最优性条件 &lt;/h2&gt;   
 
-&lt;h3&gt;次优解认证和终止准则&lt;/h3&gt;
+&lt;h3 id=&quot;10&quot;&gt; 次优解认证和终止准则 &lt;/h3&gt;
 
 &lt;p&gt;对偶可行点可以让我们在不知道$p^* $的确切值的情况下界定给定点的次优程度。如果$\widetilde{x}$是原问题的可行解且$(\lambda,\nu)$是对偶可行解：
 $$
@@ -204,7 +185,7 @@ f_0(x^{(k)})-g(\lambda^{(k)}, \nu^{(k)})\leq\epsilon_{abs}
 $$
 保证算法终止的时候$x^{(k)}$是$\epsilon_{abs}$-次优的(只有当强对偶性质成立时对&lt;strong&gt;任意&lt;/strong&gt;$\epsilon_{abs}&amp;gt;0$都成立。)&lt;/p&gt;
 
-&lt;h3&gt;互补松弛&lt;/h3&gt;
+&lt;h3 id=&quot;11&quot;&gt; 互补松弛 &lt;/h3&gt; 
 
 &lt;p&gt;设强对偶性成立时，令$x^* $和$(\lambda^* , \nu^* )$为原问题最优解和对偶问题最优解，则有:
 $$
@@ -244,9 +225,9 @@ f_i(x^* )&amp;lt;0\Longrightarrow\lambda_i^* &amp;amp;=0
 $$
 上式意味着在最优点处，除了第 i 个约束起作用的情况(也就是取等号)，最优 Lagrange 乘子的第 $i$ 项都为零&lt;/p&gt;
 
-&lt;h3&gt;KKT条件&lt;/h3&gt;
+&lt;h3 id=&quot;12&quot;&gt; KKT条件 &lt;/h3&gt;
 
-&lt;h4&gt;非凸问题的KKT条件&lt;/h4&gt;
+&lt;h4 id=&quot;kkt&quot;&gt;非凸问题的KKT条件&lt;/h4&gt;
 
 &lt;p&gt;假设强对偶成立且$x^* $和$(\lambda^* , \nu^* )$分别为原问题和对偶问题的最优解，$f_i(x), h_j(x), i=0,\dots m, j=1,\dots ,p$可微。因为$L(x, \lambda^* , \nu^* )$(凸函数)关于$x$求极小在$x^* $处取得最小值，因此Lagrange函数在$x^* $处的导数为零，因此有
 $$
@@ -262,7 +243,7 @@ $$
 $$
 我们称上式为 &lt;strong&gt;Karush-Kuhn-Tucker&lt;/strong&gt; (KKT) 条件&lt;/p&gt;
 
-&lt;h4&gt;凸问题的KKT条件&lt;/h4&gt;
+&lt;h4 id=&quot;kkt&quot;&gt;凸问题的KKT条件&lt;/h4&gt;
 
 &lt;p&gt;如果函数$f_i(x)$是凸函数，$h_i(x)$是仿射函数，$\widetilde{x}, (\widetilde{\lambda}, \widetilde{\nu})$ 分别为原问题和对偶问题的可行解，且满足KKT条件:&lt;/p&gt;
 
@@ -276,7 +257,7 @@ h_i(\widetilde{x}) = 0 &amp;amp; i=1,\dots,p \\
 $$&lt;/p&gt;
 
 &lt;p&gt;$$
- \nabla f_0(\widetilde{x})+ +\sum^m_{i=1} \widetilde{\lambda} \nabla f_i(\widetilde{x})+\sum^p_{i=1}\widetilde{\nu}_i \nabla h_i(\widetilde{x})=0
+ \nabla f_0(\widetilde{x})+ +\sum^m_{i=1} \widetilde{\lambda}_i \nabla f_i(\widetilde{x})+\sum^p_{i=1}\widetilde{\nu}_i \nabla h_i(\widetilde{x})=0
  $$&lt;/p&gt;
 
 &lt;p&gt;则$\widetilde{x}, (\widetilde{\lambda}, \widetilde{\nu})$ 分别为原问题和对偶问题的最优解，对偶间隙为 0.&lt;/p&gt;
@@ -285,30 +266,10 @@ $$&lt;/p&gt;
  
  <entry>
    <title>Unix/Linux 文件和进程管理</title>
-   <link href="http://localhost:4000/2016/05/23/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+   <link href="http://localhost:4000/command-line/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
    <updated>2016-05-23T00:00:00+08:00</updated>
-   <id>http://localhost:4000/2016/05/23/Linux学习笔记</id>
-   <content type="html">&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#vim&quot;&gt;Vim&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86&quot;&gt;文件管理&lt;/a&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#chmod-%E5%91%BD%E4%BB%A4&quot;&gt;chmod 命令&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#chown%E5%92%8Cchgrp%E5%91%BD%E4%BB%A4&quot;&gt;chown和chgrp命令&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86&quot;&gt;进程管理&lt;/a&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%B1%9E%E6%80%A7&quot;&gt;进程的属性&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E5%91%BD%E4%BB%A4%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84&quot;&gt;命令是如何执行的&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E5%83%B5%E5%B0%B8zombie%E8%BF%9B%E7%A8%8B&quot;&gt;僵尸(zombie)进程&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E5%AD%A4%E7%AB%8B%E8%BF%9B%E7%A8%8B%E5%92%8C%E5%90%8E%E5%8F%B0%E9%A9%BB%E7%95%99%E8%BF%9B%E7%A8%8B&quot;&gt;孤立进程和后台驻留进程&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E5%89%8D%E5%8F%B0%E5%90%8E%E5%8F%B0%E8%BF%9B%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E5%88%87%E6%8D%A2&quot;&gt;前台后台进程之间的切换&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E4%BF%A1%E5%8F%B7&quot;&gt;信号&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
+   <id>http://localhost:4000/command-line/Linux学习笔记</id>
+   <content type="html">&lt;blockquote&gt;
 &lt;p&gt;本文基于&lt;a href=&quot;https://www.tutorialspoint.com/unix/index.htm&quot;&gt;Learn Unix&lt;/a&gt;教程&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -562,9 +523,9 @@ HUP INT QUIT ILL TRAP ABRT EMT FPE KILL BUS SEGV SYS PIPE ALRM TERM URG STOP TST
  
  <entry>
    <title>算法笔记一</title>
-   <link href="http://localhost:4000/2016/04/06/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
+   <link href="http://localhost:4000/algorithms/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
    <updated>2016-04-06T00:00:00+08:00</updated>
-   <id>http://localhost:4000/2016/04/06/算法笔记</id>
+   <id>http://localhost:4000/algorithms/算法笔记</id>
    <content type="html">&lt;blockquote&gt;
 &lt;p&gt;本文基于刘汝佳的《算法竞赛入门经典训练指南》第一章，总结阅读第一章的收获&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -630,7 +591,7 @@ HUP INT QUIT ILL TRAP ABRT EMT FPE KILL BUS SEGV SYS PIPE ALRM TERM URG STOP TST
     &lt;span class=&quot;n&quot;&gt;cycleStart&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h4 id=&quot;&gt;证明&lt;/h4&gt;
+&lt;h4&gt;证明&lt;/h4&gt;
 
 &lt;p&gt;对于Floyd判圈算法判断环是否存在的证明很容易想到，如果有环，另个速度不同的指针陷入无限循环中一定会相遇，若速度快的指针可以到达末端则不存在环。求环的长度同样很简单。&lt;/p&gt;
 
@@ -642,16 +603,18 @@ HUP INT QUIT ILL TRAP ABRT EMT FPE KILL BUS SEGV SYS PIPE ALRM TERM URG STOP TST
 
 &lt;p&gt;速度较快的指针走过的距离为: $fastDistance= x+y+z+y $&lt;/p&gt;
 
-&lt;p&gt;​ 另外我们知道快指针的速度是慢指针的两倍，所以在相同的时间内，$fastDistance = 2 \times slowDistance$， 所以我们可以推出:
-$$
+&lt;p&gt;​ 另外我们知道快指针的速度是慢指针的两倍，所以在相同的时间内，$fastDistance = 2 \times slowDistance$， 所以我们可以推出:&lt;/p&gt;
+
+&lt;p&gt;$$
 \begin{align}
 2(x+y)&amp;amp; = x+y+z+y\\
 x &amp;amp;=z
 \end{align}
-$$
-​记住之前指针环绕圈的方向是顺时针（逆时针同理，但是两个指针的方向必须是一样的），把其中一个指针的位置重置到首端（假设为p1），两个指针都以速度$1$移动。因为$x = z$，当p1运动距离$x$，p2运动$z$，两个指针恰好相遇到环的起点。&lt;/p&gt;
+$$&lt;/p&gt;
 
-&lt;h4 id=&quot;&gt;使用范围&lt;/h4&gt;
+&lt;p&gt;​记住之前指针环绕圈的方向是顺时针（逆时针同理，但是两个指针的方向必须是一样的），把其中一个指针的位置重置到首端（假设为p1），两个指针都以速度$1$移动。因为$x = z$，当p1运动距离$x$，p2运动$z$，两个指针恰好相遇到环的起点。&lt;/p&gt;
+
+&lt;h4&gt;使用范围&lt;/h4&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;此部分是个人想法，欢迎指正&lt;/p&gt;
@@ -721,38 +684,10 @@ $$
  
  <entry>
    <title>Sponsor Search</title>
-   <link href="http://localhost:4000/2016/03/02/Sponser-search/"/>
+   <link href="http://localhost:4000/computational-advertising/Sponser-search/"/>
    <updated>2016-03-02T00:00:00+08:00</updated>
-   <id>http://localhost:4000/2016/03/02/Sponser-search</id>
-   <content type="html">&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#INTRODUCTION&quot;&gt;INTRODUCTION&lt;/a&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#Implementation%20Approaches&quot;&gt;Implementation Approaches&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#The%20Two%20Phases%20Of%20Ad%20Selection&quot;&gt;The Two Phases Of Ad Selection&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#EXACT%20MATCH&quot;&gt;EXACT MATCH&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#ADVANCED%20MATCH&quot;&gt;ADVANCED MATCH&lt;/a&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#Query%20Rewriting%20Basing%20On%20Query%20Logs&quot;&gt;Query Rewriting Basing On Query Logs&lt;/a&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#Definition%20Of%20Query%20Pair&quot;&gt;Definition Of Query Pair&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#Phrase%20Substitutions&quot;&gt;Phrase Substitutions&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#Identifying%20Significant%20Query%20Pairs%20And%20Phrase%20Pairs&quot;&gt;Identifying Significant Query Pairs And Phrase Pairs&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#Generating%20Candidates&quot;&gt;Generating Candidates&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#Query%20Rewriting%20Basing%20On%20Click%20Data&quot;&gt;Query Rewriting Basing On Click Data&lt;/a&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#Problem%20Definition&quot;&gt;Problem Definition&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#Absorbing%20Random%20Walk%20Algorithms&quot;&gt;Absorbing Random Walk Algorithms&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;INTRODUCTION&quot;&gt;INTRODUCTION&lt;/h2&gt;
+   <id>http://localhost:4000/computational-advertising/Sponser-search</id>
+   <content type="html">&lt;h2 id=&quot;INTRODUCTION&quot;&gt;INTRODUCTION&lt;/h2&gt;
 
 &lt;p&gt;But for the SS, the web will be much more small. Once a user type the
 queries and browse on the search engines, the advertiser will bid for
@@ -769,7 +704,7 @@ because more than 80% of queries occur one time. The challenge of AM is
 queries re-writting, we’ll talk in section 2. For section 3, we’ll talk
 the problem remain to be solved in the new term.&lt;/p&gt;
 
-&lt;h3 id=&quot;Implementation Approaches&quot;&gt;Implementation Approaches&lt;/h3&gt;
+&lt;h3 id=&quot;ImplementationApproaches&quot;&gt;Implementation Approaches&lt;/h3&gt;
 
 &lt;h4 id=&quot;the-data-base-approach-original-overture-approach&quot;&gt;&lt;strong&gt;The data base approach&lt;/strong&gt;(original Overture approach)&lt;/h4&gt;
 
@@ -793,7 +728,7 @@ the problem remain to be solved in the new term.&lt;/p&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;The Two Phases Of Ad Selection&quot;&gt;The Two Phases Of Ad Selection&lt;/h3&gt;
+&lt;h3 id=&quot;TheTwoPhasesOfAdSelection&quot;&gt;The Two Phases Of Ad Selection&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;Ad Retrieval: Consider the whole ad corpus and select a set of most
@@ -817,7 +752,7 @@ in other words, it will reach less users.&lt;/li&gt;
 
 &lt;h2 id=&quot;ADVANCED MATCH&quot;&gt;ADVANCED MATCH&lt;/h2&gt;
 
-&lt;h3 id=&quot;Query Rewriting Basing On Query Logs&quot;&gt;Query Rewriting Basing On Query Logs&lt;/h3&gt;
+&lt;h3 id=&quot;QueryLogs&quot;&gt;Query Rewriting Basing On Query Logs&lt;/h3&gt;
 
 &lt;h4 id=&quot;Definition Of Query Pair&quot;&gt;Definition Of Query Pair&lt;/h4&gt;
 
@@ -896,9 +831,7 @@ new phrases: $q_i \mapsto p_1\dots p_j^{\prime}\dots p_n$&lt;/li&gt;
 
 &lt;p&gt;more information[^1]&lt;/p&gt;
 
-&lt;h3 id=&quot;Query Rewriting Basing On Click Data&quot;&gt;Query Rewriting Basing On Click Data&lt;/h3&gt;
-
-&lt;h2 id=&quot;query-rewriting-basing-on-click-data&quot;&gt;Query Rewriting Basing On Click Data&lt;/h2&gt;
+&lt;h3 id=&quot;ClickData&quot;&gt;Query Rewriting Basing On Click Data&lt;/h3&gt;
 
 &lt;h4 id=&quot;Problem Definition&quot;&gt;Problem Definition&lt;/h4&gt;
 
