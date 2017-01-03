@@ -9,13 +9,14 @@ aside.col-md-3.hidden-print > div > ul {
     list-style-type: none;
 }
 aside.col-md-3.hidden-print {
-    position: fixed;
+    position: absolute;
     top: 80px;
-    left: 120px;
+    left: 80px;
     color: #b3b3b3;
 }
 
 .affix {
+    position: fixed;
     top: 20px;
     width: 213px;
 }
@@ -25,8 +26,13 @@ aside.col-md-3.hidden-print {
     }         
 }
 
-.nav .active {
+.nav a {
+    color: #808080;
+}
+
+.nav .active a {
     font-weight: bold;
+    color: #268bd2;
 }
 .nav .nav {
     display: none;
@@ -37,6 +43,7 @@ aside.col-md-3.hidden-print {
 .nav .nav a {
     font-weight: normal;
     font-size: .85em;
+    color: #808080;
 }
 .nav .nav span {
     margin: 0 5px 0 2px;
@@ -44,9 +51,10 @@ aside.col-md-3.hidden-print {
 .nav .nav .active a,
 .nav .nav .active:hover a,
 .nav .nav .active:focus a {
+    color: #268bd2;
     font-weight: bold;
     padding-left: 30px;
-    border-left: 5px solid black;
+    border-left: 3px solid #268bd2;
 }
 .nav .nav .active span,
 .nav .nav .active:hover span,
