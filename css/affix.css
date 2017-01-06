@@ -8,21 +8,20 @@ aside.col-md-3.hidden-print > div > ul {
     width: 263px;
     list-style-type: none;
 }
-aside.col-md-3.hidden-print {
-    position: absolute;
-    top: 80px;
-    left: 80px;
-    color: #b3b3b3;
-}
 
-.affix {
-    position: fixed;
-    top: 20px;
-    width: 213px;
+@media (min-width: 1200px) {
+    aside.col-md-3.hidden-print {
+        position: absolute;
+        top: 80px;
+        left: 80px;
+        color: #b3b3b3;
+    }    
 }
 @media (min-width: 1200px) {
     .affix {
-        width: 263px;
+        position: fixed;
+        top: 20px;
+        width: 213px;
     }         
 }
 

@@ -6,8 +6,15 @@
   max-width: 38rem;
   padding-left:  1.5rem;
   padding-right: 1.5rem;
-  margin-left:  20rem;
+  margin-left:  auto;
   margin-right: auto;
+}
+
+@media (min-width: 1200px) {
+	.container {
+	  margin-left:  20rem;
+	}
+
 }
 
 footer {
