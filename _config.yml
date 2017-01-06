@@ -3,7 +3,7 @@ permalink:           /:categories/:title/
 
 # Setup
 title:               Young
-tagline:             'Machine Learning, Computational Advertising, Algorithms'
+tagline:             'Hello World!'
 url:                 http://hychn.github.io
 paginate:            1
 baseurl:             ""
@@ -11,6 +11,7 @@ baseurl:             ""
 pages_list:
   About: '/about'
   Archive: '/archive'
+  Feed: '/atom.xml'
 
 # We specify the directory for Jekyll so we can use @imports.
 sass:
@@ -26,7 +27,7 @@ author:
 # Custom vars
 version:             2.0.0
 github:
-  repo:              https://github.com/agrowingtree/agrowingtree.github.io
+  repo:              https://github.com/hychn/hychn.github.io
 
 # Gems
 gems:
