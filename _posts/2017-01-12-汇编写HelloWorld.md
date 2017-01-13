@@ -1,0 +1,125 @@
+---
+layout: post
+title: 汇编写HelloWorld
+categories: Assembly-Programming
+---
+
+
+## HelloWorld for Linux
+
+
+```nasm
+
+;代码段。之前提到过 segment 和 section 等价
+section	.text
+    global _start   ;_start 是一个 label 告诉连接器程序开始位置
+_start: ;程序会从这里执行
+
+;第4号系统调用 sys_write，打印 HelloWorld 到标准输出
+    mov	edx,len     
+    mov	ecx,msg     
+    mov	ebx,1       
+    mov	eax,4       
+    int	0x80        
+
+;第1号系统调用，sys_exit，结束程序
+    mov	eax,1       
+    int	0x80        
+
+;数据段
+section	.data
+msg db 'Hello, world!'  ;字符串
+len equ $ - msg     ;字符串长度
+```
+
+
+### 编译链接执行
+
+```shell
+$ nasm -f elf32 -o HelloWorld.o HelloWorld.asm
+$ ld -o HelloWorld HelloWorld.o
+$ ./HelloWorld
+Hello, world!
+```
+
+## HelloWorld for Mac
+
+```nasm
+section .text
+	global start
+start:
+
+;第4号系统调用 sys_write，打印 HelloWorld 到标准输出
+;Mac 中的系统调用时利用了函数调用的方法直接把参数传到栈上，在之前章节讲过，如果遗忘了可以回头看下
+    push    dword len	
+    push    dword msg
+    push    dword 1
+    mov     eax, 4
+    sub     esp, 4		; 这里并没有找到文献解释，但是我猜是补充一个空的 ret
+    int     0x80
+    add     esp, 16		;清除参数 (3+1)*4-byte = 16-byte
+
+;第1号系统调用，sys_exit，结束程序
+    mov     eax, 1
+    sub     esp, 4
+    int     0x80	;程序到这里就结束了，所以不用再更新 ESP
+
+;数据初始化，下章详细讲
+section .data
+msg db 'Hello, world!'
+len equ $ - msg
+```
+
+### 编译链接执行
+
+```shell
+$ nasm -f macho32 -o HelloWorld.o HelloWorld.asm
+$ ld -o HelloWordl HelloWorld.o
+$ ./HelloWorld
+Hello, world!
+```
+
+
+
+## 系统调用
+
+[系统调用](https://en.wikipedia.org/wiki/System_call)（System Calls）是程序需要 kernel 提供服务支持时的接口。
+
+>In [computing](https://en.wikipedia.org/wiki/Computing), a **system call** is the programmatic way in which a [computer program](https://en.wikipedia.org/wiki/Computer_program) requests a service from the [kernel](https://en.wikipedia.org/wiki/Kernel_(computing)) of the [operating system](https://en.wikipedia.org/wiki/Operating_system) it is executed on. 
+
+在我们的 HelloWorld 程序中用到了两个系统调用，分别是第 1 号和第 4 号：
+
+```
+sys_exit:  void _exit(int status);
+sys_write: ssize_t write(int fd, const void *buf, size_t count);
+```
+
+`sys_exit` 需要一个整形参数输入，`sys_write` 从左到右分别表示：
+
++ `fd` 是要写入的文件（1 表示写入到标准输出）
++ `*buf` 是要写入文件的数据的地址
++ `size_t` 是要写入文件的数据的大小
+
+更多系统调用可以参考这份 [Linux Syscall Reference](http://syscalls.kernelgrok.com/)。
+
+### 参数传递
+
+#### Linux
+
+我们把系统调用的编号，存放在 EAX 寄存器中。参数的传递需要其他寄存器。
+
+当有小于等于 6 个参数时，Linux IA-32 中要传递的参数从左到右存放在 EBX，ECX，EDX，ESI，EDI，EBP 中。且从 EBX 开始，如程序中，EBX 存放的之为 1， 表示写入到标准输出，ECX 存放数据地址，以此类推。当有大于 6 个参数时，存放在内存中的参数的，第一个参数的地址存放在 EBX 中。
+
+为什么一直在强调参数顺序呢？虽然我们是从左数第一个参数开始，将参数写入到对应寄存器的，但是参数传递给函数时是从右向左传递的，这点相信在 C/C++ 中大家也接触过，参数是从右向左加载到栈上面的。
+
+每次传递完参数都会有 `int 0x80` 或者会看到 `int 0x80h` ，他们又是干什么的呢？
+
+#### Mac
+
+系统调用传递参数的方法和函数相同。
+
+### 中断
+
+`int` 就是 interrupt，中断的意思，而 `0x80` 是中断号。一个中断把程序流传输到解决能够解决中断的地方，在这里就是 `0x80`。`0x80` 在 Linux 中是让 kernel 解决中断，所以被程序用来处理系统调用。Kernel 通过检查 EAX 中的数值来决定使用哪个系统调用。
+
+

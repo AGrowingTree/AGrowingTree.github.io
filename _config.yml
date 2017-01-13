@@ -36,3 +36,4 @@ gems:
 
 kramdown:
   input: GFM
+highlighter: rouge
