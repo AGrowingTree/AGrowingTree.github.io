@@ -1,0 +1,155 @@
+<!doctype HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IRR of Monthly Instalment</title>
+<style>
+body {
+  font-family: sans-serif;
+}
+.page-header {
+  color: gray;
+  text-align: center;
+}
+div {
+  font-size: large;
+  margin-bottom: .5em;
+  text-align: center;
+}
+.red {
+  color: indianred;
+}
+.red>input {
+  border: none;
+  border-bottom: 1px solid;
+  color: indianred;
+  font-family: monospace;
+  font-size: xx-large;
+  text-align: right;
+}
+.red>span {
+  border-bottom: 1px solid;
+  font-family: monospace;
+  font-size: xx-large;
+  padding-bottom: 1px;
+}
+.gray {
+  color: gray;
+}
+.gray>span {
+  font-family: monospace;
+  font-size: xx-large;
+}
+button {
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  border-bottom: 2px dotted;
+  color: inherit;
+  margin: 2px;
+}
+</style>
+<script>
+var benchmark = function(period, fee, gap, apr) {
+  var res = Math.pow(1/(1+apr), 1/12);
+  res = res*(1-Math.pow(res, period))/(1-res);
+  res *= Math.pow(1/(1+apr), (gap-30.0)/30/12);
+  res *= 1/period+fee;
+  return res;
+};
+var getPay = function(period, fee) {
+  return 1/period+fee;
+}
+var getAPR = function(period, fee, gap) {
+  var lo = 0, hi = 1;
+  while(hi-lo>Number.EPSILON) {
+    var mi = (lo+hi)/2;
+    if(benchmark(period, fee, gap, mi) < 1)
+      hi = mi;
+    else
+      lo = mi;
+  }
+  return lo;
+};
+var update = function() {
+  var peroid = parseInt(document.getElementById('peroid').value);
+  var fee = parseFloat(document.getElementById('fee').value)/100;
+  var gap = parseInt(document.getElementById('gap').value);
+  document.getElementById('apr').innerText = (getAPR(peroid, fee, gap)*100).toFixed(2)
+  document.getElementById('pay').innerText = (getPay(peroid, fee)*100).toFixed(2)
+};
+var assign = function(peroid, fee, gap) {
+  document.getElementById('peroid').value = peroid;
+  document.getElementById('fee').value = fee;
+  document.getElementById('gap').value = gap;
+  update();
+};
+window.onload = function() {
+  update();
+  document.getElementById('peroid').onkeyup = update;
+  document.getElementById('fee').onkeyup = update;
+  document.getElementById('gap').onkeyup = update;
+  document.getElementById('peroid').onchange = update;
+  document.getElementById('fee').onchange = update;
+  document.getElementById('gap').onchange = update;
+};
+</script>
+</head>
+<body>
+
+<h2 class="page-header">
+分期年化利率计算器
+<br>
+等额本息
+<hr>
+</h2>
+
+<div class="red">
+分 <input id="peroid" type="number" min="1" style="max-width: 2.4em;" value="12"> 期偿还，
+<br>
+每期费率为 <input id="fee" type="number" min="0" step="0.01" style="max-width: 3.6em;" value="0.35"><span>%</span>，
+<br>
+消费／取现与第一次还款间隔 <input id="gap" type="number" min="0" style="max-width: 2.4em;" value="30"> 天．
+</div>
+
+<div class="red">
+❦
+<br>
+每期偿还本金的 <span id="pay"></span><span>%</span>，
+<br>
+年化利率为 <span id="apr"></span><span>%</span>．
+<br>
+</div>
+<div class="gray">
+❦
+<br>
+<button onclick="assign(2, 1, 30)">招账 2</button>
+<button onclick="assign(3, .9, 30)">招账 3</button>
+<button onclick="assign(6, .75, 30)">招账 6</button>
+<button onclick="assign(10, .7, 30)">招账 10</button>
+<button onclick="assign(12, .66, 30)">招账 12</button>
+<button onclick="assign(18, .68, 30)">招账 18</button>
+<button onclick="assign(24, .68, 30)">招账 24</button>
+<br>
+<button onclick="assign(3, .95, 48)">招现 3</button>
+<button onclick="assign(6, .8, 48)">招现 6</button>
+<button onclick="assign(10, .75, 48)">招现 10</button>
+<button onclick="assign(12, .75, 48)">招现 12</button>
+<button onclick="assign(18, .75, 48)">招现 18</button>
+<button onclick="assign(24, .75, 48)">招现 24</button>
+<br>
+<button onclick="assign(6, .7, 30)">废账 6</button>
+<button onclick="assign(12, .7, 30)">废账 12</button>
+<button onclick="assign(18, .72, 30)">废账 18</button>
+<button onclick="assign(24, .72, 30)">废账 24</button>
+<br>
+❦
+<br>
+个人消费贷的年利率约为 6%．
+<br>
+信用卡循环利息的年化利率约为 19.56%．
+</div>
+
+</body>
+</html>

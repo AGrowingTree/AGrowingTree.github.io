@@ -1,8 +1,9 @@
 ---
 layout: post
 title: Sponser Advertising
-categories: Computational-Advertising
 ---
+
+An introduction for 3 technique in sponser search, exact match, advanced match and phrase match.
 
 INTRODUCTION
 ============
@@ -15,7 +16,7 @@ user want the relevance. The cure problem to satisfy advertisers, users,
 and the netwrork is to select the relevant textual ad.
 
 there are 3 technique mentioned in the ppt, **EM(Exact Match)**, **AM**\
-**(Advanced Match)**, and **PM(Phase Match)**. EM is using for the
+**(Advanced Match)**, and **PM(Phrase Match)**. EM is using for the
 frequently occured queries, we’ll talk in section 1. The most
 complicated technique is AM. AM is born for the long tail of queries,
 because more than 80% of queries occur one time. The challenge of AM is

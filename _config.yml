@@ -1,39 +1,13 @@
-# Permalinks
-permalink:           /:categories/:title/
-
-# Setup
-title:               Young
-tagline:             'Hello World!'
-url:                 http://hychn.github.io
-paginate:            1
-baseurl:             ""
-
-pages_list:
-  About: '/about'
-  Archive: '/archive'
-  Feed: '/atom.xml'
-
-# We specify the directory for Jekyll so we can use @imports.
-sass:
-  sass_dir:          _sass
-  style:            :compressed
-
-# About/contact
-author:
-  name:              Huayang Li
-  url:               https://twitter.com/HuayangLi
-  email:             waajoenglei@gmail.com
-
-# Custom vars
-version:             2.0.0
-github:
-  repo:              https://github.com/hychn/hychn.github.io
-
-# Gems
 gems:
-  - jekyll-paginate
-  - jekyll-gist
+ - jekyll-coffeescript
+ - jekyll-paginate
 
 kramdown:
   input: GFM
-highlighter: rouge
+  hard_wrap: false
+
+sass:
+  style: :compressed
+
+pygments_options:
+  tabsize: 4

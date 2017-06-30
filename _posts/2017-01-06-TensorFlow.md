@@ -1,12 +1,11 @@
 ---
 layout: post
 title: TensorFlow 基本工作原理
-categories: Deep-Learning
 ---
 
 
 
-> 详情请参考[此处](https://www.oreilly.com/learning/hello-tensorflow)
+了解 TensorFlow 框架的基本工作原理，本文参考了[此处](https://www.oreilly.com/learning/hello-tensorflow)。
 
 ## 前言
 

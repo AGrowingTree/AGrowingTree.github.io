@@ -1,0 +1,84 @@
+---
+---
+
+blockquote
+  font-size: 1em!important
+
+footer
+  border-top: 1px solid #d9534f
+  margin-top: 128px
+  padding: 32px
+  text-align: center
+  box-shadow: 0 1px 0 rgba(255,255,255,0.15), inset 0 1px 5px rgba(0,0,0,0.075)
+
+footer > img
+  margin: 8px
+  width: 128px
+
+.navbar-brand
+  font-family: "Palatino Linotype", serif
+  font-variant: small-caps
+
+.navbar-default .navbar-nav > .active > a
+  border-left: 2px solid #d9534f
+
+@media (min-width: 768px)
+  .navbar-default .navbar-nav > .active > a
+    border-left: none
+    border-top: 2px solid #d9534f
+    padding-top: 13px
+
+.navbar-default .navbar-nav > .active > a
+  background-image: linear-gradient(to bottom, #f2f2f2 0, #fafafa 100%)
+  box-shadow: inset 0 3px 9px rgba(0,0,0,0.075)
+
+.flip-x
+  transform: scaleX(-1)
+
+.affix-bottom
+  position: absolute
+
+main h1
+  color: #d9534f
+  text-align: center
+
+main h2
+  color: #d9534f
+
+main h3
+  color: gray
+
+main h4
+  font-weight: bold
+
+aside > div
+  display: none
+  a
+    color: gray
+  .active > a
+    border-right: #d9534f solid 2px
+    font-weight: bold
+    color: #d9534f
+  > .nav .nav
+    display: none
+    padding-left: 1em
+  > .nav > .active > .nav
+    display: block
+
+aside > div.affix
+  top: 20px
+
+@media (min-width: 992px)
+  aside > div
+    display: block
+    width: 213px
+
+@media (min-width: 1200px)
+  aside > div
+    display: block
+    width: 263px
+
+pre.highlight > code
+  tab-size: 4
+  white-space: pre
+

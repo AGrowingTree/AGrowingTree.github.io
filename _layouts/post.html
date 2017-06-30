@@ -1,32 +1,73 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html lang="en zh-Hant">
+  {% include head.html %}
+  <body data-spy="scroll" data-target="aside">
+    {% include header.html %}
+    <div class="container">
+      <aside class="col-md-3 hidden-print">
+        <div id="contents">
+          <ul class="nav">
+          </ul>
+        </div>
+      </aside>
+      <main class="col-md-9">
+        <div class="page-header">
+          <h1>
+            {{ page.title }}
+            <br>
+            <small>{{ page.subtitle }}</small>
+          </h1>
+        </div>
+        <div>
+          {{ content }}
+        </div>
+        <hr>
+        <h5>
+          <span class="glyphicon glyphicon-copyright-mark flip-x"></span>
+          Created by <i>Daniel Zhou</i> on <b>{{ page.date | date_to_string }}</b>, this work is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/" rel="license" target="_blank">Creative Commons Attribution 4.0 International License</a>.
+        </h5>
+      </main>
+    </div>
+    <hr>
+    <div class="container" id="comments">
+      {%if page.comments %}
+        {% assign sorted_comments = (page.comments | sort: 'date') %}
+        {% for c in sorted_comments %}
+          <div class="media">
+            <div class="media-left">
+              <img src="{{ c.author.picture }}" alt="{{ c.author.displayName }}" class="img-circle" height="64" width="64">
+            </div>
+            <div class="media-body">
+              <p class="text-muted">
+                <a href="{{ c.author.url }}">{{ c.author.displayName }}</a>
+                on {{ c.date | date_to_string }}
+              </p>
+              <p>{{ c.content | newline_to_br }}</p>
+            <hr>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        There are no comments on this post.
+        <hr>
+      {% endif %}
+      <div id="commentit"></div>
+      <script type="text/javascript">
+        /** CONFIGURATION VARIABLES **/
+        var commentitUsername = 'hychn';
+        var commentitRepo = 'hychn/hychn.github.io';
+        var commentitPath = '{{ page.path }}';
 
-
-<article class="post">
-  <div>
-  <h1 class="post-title">{{ page.title }}</h1>
-  <time datetime="{{ page.date | date_to_xmlschema }}" class="post-date">{{ 
-  page.date | date_to_string }}</time>
-  </div>
-  {{ content }} 
-  <div>
-  {% include comments.html %}
-  </div>
-</article>
-
-{% if site.related_posts != empty %}
-<aside class="related">
-  <h3>Related posts</h3>
-  <ul class="related-posts">
-    {% for post in site.related_posts limit:3 %}
-      <li>
-        <a href="{{ site.baseurl }}{{ post.url }}">
-          {{ post.title }}
-          <small><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date_to_string }}</time></small>
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
-</aside>
-{% endif %}
+        /** DON'T EDIT FOLLOWING LINES **/
+        (function() {
+            var commentit = document.createElement('script');
+            commentit.type = 'text/javascript';
+            commentit.async = true;
+            commentit.src = 'https://commentit.io/static/embed/dist/commentit.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(commentit);
+        })();
+      </script>
+    </div>
+    {% include footer.html %}
+  </body>
+</html>
